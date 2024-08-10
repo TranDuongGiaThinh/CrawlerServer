@@ -1,26 +1,30 @@
 const {sequelize, DataTypes} = require('../configs/db_config')
 
-const DataModel = sequelize.define(
-    'DataModel',
+const AccountTypeModel = sequelize.define(
+    'AccountTypeModel',
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
+        type: {
             type: DataTypes.TEXT,
             allowNull: false
         },
         description: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        is_admin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
     },
     {
-        tableName: 'data',
+        tableName: 'account_types',
         timestamps: false
     }
 )
 
-module.exports = DataModel
+module.exports = AccountTypeModel
