@@ -19,6 +19,10 @@ const CrawlActionTypeModel = sequelize.define(
         have_value: {
             type: DataTypes.BOOLEAN,
             allowNull: false
+        },
+        have_selector: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
     },
     {
