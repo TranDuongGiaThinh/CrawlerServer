@@ -56,7 +56,7 @@ const CrawlConfigModel = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: true
         },
-        bodey_api: {
+        body_api: {
             type: DataTypes.TEXT,
             allowNull: true
         },

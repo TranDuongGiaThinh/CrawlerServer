@@ -4,5 +4,5 @@ const CrawlActionTypeModel = require('../models/crawl_action_type_model')
 exports.getAll = async () => {
     const crawlActionTypes = await CrawlActionTypeModel.findAll()
 
-    return crawlActionTypes || []
+    return crawlActionTypes
 }

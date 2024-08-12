@@ -13,5 +13,5 @@ exports.checkExists = async (id) => {
 exports.getAll = async () => {
     const crawlTypes = await CrawlTypeModel.findAll()
 
-    return crawlTypes || []
+    return crawlTypes
 }

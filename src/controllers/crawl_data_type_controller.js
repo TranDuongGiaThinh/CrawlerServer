@@ -27,7 +27,7 @@ exports.getAllOfCrawlType = async (req, res) => {
             message: 'Lấy danh sách loại cách lấy dữ liệu của loại thu thập thành công!'
         })
     } catch (e) {
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             crawl_data_types: [],
             message: 'Lỗi khi lấy danh sách loại cách lấy dữ liệu của loại thu thập!',
             error: e.message

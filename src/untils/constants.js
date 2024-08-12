@@ -87,26 +87,8 @@ const HTTP_METHODS = {
 
 // Các hành động mô phỏng người dùng khi thu thập bằng HTML
 const ACTIONS = {
-    CLICK_WHEN_APPEAR: 'Click when appear',
-    SHOW_ALL: 'Show all'
-};
-
-// Các lựa chọn
-const OPTIONS = {
-    APPEND: 'append',
-    PREPEND: 'prepend',
-    TO_NUMBER: 'to number',
-    REMOVE: 'remove',
-    REMOVE_ALL: 'remove all',
-    REPLACE: 'replace',
-    REPLACE_ALL: 'replace all'
-};
-
-// Các lựa chọn
-const CONDITIONS = {
-    START_WITH: 'Start with',
-    END_WITH: 'End with',
-    CONTAINS: 'Contains'
+    // CLICK_WHEN_APPEAR: 'Click when appear',
+    // SHOW_ALL: 'Show all'
 };
 
 // Loại thu thập
@@ -129,14 +111,6 @@ const CRAWL_DATA_TYPES = {
     ATTRIBUTE: 'attribute'
 };
 
-// Hằng số về loại gói người dùng
-const USER_TYPES = {
-    // Loại tài khoản mặc định của user khi vừa tạo
-    DEFAULT: 'Mặc định', 
-};
-
-
-
 // Hằng số về loại tài khoản
 const ACCOUNT_TYPES = {
     USER_TYPE_NAME: 'Người dùng', 
@@ -147,14 +121,14 @@ const ACCOUNT_TYPES = {
 // - Không bao giờ được dùng để kiểm tra logic
 // - Vì các thông tin này đã có ở cấu hình "cha"
 const CHILD_CONFIGS = {
-    user_id: -1,
-    name: '',
-    description: '',
-    item_type_id: null,
-    url: '',
-    website_id: null,
-    is_complete: false,
-    update_at: new Date()
+    // user_id: -1,
+    // name: '',
+    // description: '',
+    // item_type_id: null,
+    // url: '',
+    // website_id: null,
+    // is_complete: false,
+    // update_at: new Date()
 }
 
 // Export các hằng số
@@ -164,12 +138,9 @@ module.exports = {
     HTTP_STATUS,
     ERROR_CODES,
     ACTIONS,
-    OPTIONS,
-    CONDITIONS,
     CRAWL_TYPES,
     CRAWL_RESULT_TYPES,
     CRAWL_DATA_TYPES,
-    USER_TYPES,
     ACCOUNT_TYPES,
     CHILD_CONFIGS,
     SCHEDULE,

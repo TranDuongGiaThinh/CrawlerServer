@@ -8,5 +8,5 @@ exports.getAllOfCrawlType = async (id) => {
         }
     })
 
-    return crawlDataTypes || []
+    return crawlDataTypes
 }
