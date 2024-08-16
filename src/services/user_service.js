@@ -3,7 +3,7 @@ const AccountTypeModel = require('../models/account_type_model')
 const Sequelize = require('sequelize');
 
 // Kiểm tra người dùng có tồn tại
-exports.checkUserExists = async (id) => {
+exports.checkUserExists = async (userId) => {
     const adminAccountType = await AccountTypeModel.findOne({
         where: {
             is_admin: true
@@ -12,7 +12,7 @@ exports.checkUserExists = async (id) => {
 
     const user = await UserModel.findOne({
         where: {
-            id: id,
+            id: userId,
             account_type_id: {
                 [Sequelize.Op.ne]: adminAccountType.id
             }
