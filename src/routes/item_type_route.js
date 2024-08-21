@@ -7,7 +7,7 @@ const route = express.Router()
 route.get('/get-all-item-type-of-user/:user_id', itemTypeController.getAllItemTypeOfUser)
 
 // Kiểm tra tên chủ đề thu thập đã tồn tại
-route.get('/check-name-exists/:name/:user_id', itemTypeController.checkNameExists)
+route.get('/check-name-exists', itemTypeController.checkNameExists)
 
 // Kiểm tra chủ đề có đang được sử dụng
 route.get('/check-item-type-is-using/:id', itemTypeController.checkItemTypeIsUsing)

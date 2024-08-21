@@ -2,6 +2,7 @@ const ItemTypeModel = require('../models/item_type_model')
 const CrawlConfigModel = require('../models/crawl_config_model')
 const ItemModel = require('../models/item_model')
 
+const Sequelize = require('sequelize')
 
 // Kiểm tra chủ đề thu thập có tồn tại
 exports.checkExists = async (id) => {
@@ -41,7 +42,9 @@ exports.checkNameExists = async (name, userId) => {
 exports.checkNameExistsWithId = async (id, name) => {
     const itemType = await ItemTypeModel.findOne({
         where: {
-            id: id,
+            id: {
+                [Sequelize.Op.ne]: id
+            },
             type: name
         }
     })

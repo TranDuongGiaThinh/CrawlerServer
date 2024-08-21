@@ -38,7 +38,7 @@ exports.getAllItemTypeOfUser = async (req, res) => {
 // Kiểm tra tên chủ đề thu thập đã tồn tại
 exports.checkNameExists = async (req, res) => {
     try {
-        const {name, user_id} = req.params
+        const {name, user_id, id} = req.query
 
         // Kiểm tra người dùng tồn tại
         const exists = await userService.checkUserExists(user_id)
@@ -52,7 +52,9 @@ exports.checkNameExists = async (req, res) => {
         }
 
         // Kiểm tra tên
-        const checkResult = await itemTypeService.checkNameExists(name, user_id)
+        const checkResult = id ? 
+            await itemTypeService.checkNameExistsWithId(id, name)
+            : await itemTypeService.checkNameExists(name, user_id)
 
         res.status(HTTP_STATUS.OK).json({
             check_result: checkResult,
@@ -146,7 +148,6 @@ exports.update = async (req, res) => {
 
         // Kiểm tra tên chủ đề có trùng với các chủ đề khác
         const exists = await itemTypeService.checkNameExistsWithId(id, type)
-        
         if(exists) {
             res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tên chủ đề bị trùng với chủ đề khác!'

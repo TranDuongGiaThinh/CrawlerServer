@@ -15,6 +15,8 @@ const httpMethodRoute = require('./routes/http_method_route.js')
 const crawlResultTypeRoute = require('./routes/crawl_result_type_route.js')
 const itemTypeRoute = require('./routes/item_type_route.js')
 const websiteRoute = require('./routes/website_route.js')
+const renewalPackageRoute = require('./routes/renewal_package_route.js')
+const userTypeRoute = require('./routes/user_type_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -44,6 +46,12 @@ app.use('/item-type', itemTypeRoute)
 
 // route website thu thập
 app.use('/website', websiteRoute)
+
+// route gói gia hạn
+app.use('/renewal-package', renewalPackageRoute)
+
+// route gói thành viên
+app.use('/user-type', userTypeRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
