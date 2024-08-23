@@ -9,23 +9,18 @@ exports.getAllWebsiteOfUser = async (req, res) => {
 
         // Kiểm tra đủ tham số đầu vào
         if (!id) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
             });
-            
-            return;
         }
 
         // Kiểm tra người dùng có tồn tại
         const exists = await userService.checkUserExists(id)
 
         if(!exists) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                websites: [],
+            res.status(HTTP_STATUS.NOT_FOUND).json({
                 message: 'Người dùng không tồn tại!'
             })
-
-            return
         }
 
         // Thực hiện lấy danh sách website

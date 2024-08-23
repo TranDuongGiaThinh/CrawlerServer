@@ -28,15 +28,15 @@ const PackageUserModel = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        max_config_count: {
+        max_auto_config: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        max_export_count: {
+        max_config: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        max_export_count: {
+        max_export: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -44,7 +44,7 @@ const PackageUserModel = sequelize.define(
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        craete_at: {
+        create_at: {
             type: DataTypes.DATE,
             allowNull: false
         }
