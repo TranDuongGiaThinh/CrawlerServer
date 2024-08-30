@@ -20,37 +20,24 @@ const BACKUPS = {
     FILE_PREFIX: 'backup',
     FILE_EXTENSION: '.enc',
     DATE_FORMAT: 'yyyy_MM_dd_HHmmss',
-};
+}
 
-/* 
-    Các ký tự để phân tách chuỗi:
-    - Do một số hạn chế trong quá trình thiết kế Database nên tạm thời có một số thuộc tính phải lưu trữ nhiều giá trị cùng lúc
-    - Để tách các giá trị đó ra, ta cần có các ký tự để phân tách
-*/
-const DELIMITER_CHARACTERS = {
-    // Ký tự phân tách mảng
-    // Ví dụ: một số trường có thể chứa một danh sách (như url trong cấu hình thu thập)
-    ARRAY_DELIMITER: ', ',
-
-    // Ký tự phân cách phạm vi
-    // Ví dụ: cần xóa 1 chuỗi từ a đến b người dùng có thể nhập "a...b" (option_value ở bảng chi tiết lựa chọn)
-    RANGE_DELIMITER: '...',
-
-    // Ký tự truy xuất thuộc tính thành viên
-    // Ví dụ: truy xuất các thuộc tính bên trong 1 đối tượng: obj.data.name (attribute của chi tiết cấu hình với loại thu thập là API,RSS)
-    MEMBER_ACCESS_CHARACTER: '.'
-};
+// Thư mục chứa các file phát sinh
+const DATA_DIR = {
+    FOLDER_PATH: '',
+    
+}
 
 // HTTP Status Codes
 const HTTP_STATUS = {
-    OK: 200, // gọi api thành công
-    CREATED: 201, // tạo thành công
-    BAD_REQUEST: 400, // lỗi như: xóa dữ liệu thất bại vì id không tồn tại...
-    UNAUTHORIZED: 401, // thông tin xác thực sai
-    FORBIDDEN: 403, // người dùng không đủ quyền
-    NOT_FOUND: 404, // không tìm thấy
-    INTERNAL_SERVER_ERROR: 500, // gọi api gặp lỗi không xác định được
-};
+    OK: 200,
+    CREATED: 201,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
+}
 
 // Mã lỗi trong quá trình thu thập
 const ERROR_CODES = {
@@ -68,7 +55,7 @@ const ERROR_CODES = {
 
     // Lỗi không tìm thấy API (url không hợp lệ)
     API_NOT_FOUND: 'E004',
-};
+}
 
 /* 
     ---------------------------------------------------------------------------------------
@@ -83,38 +70,38 @@ const HTTP_METHODS = {
     PUT: 'PUT',
     DELETE: 'DELETE',
     PATCH: 'PATCH'
-};
+}
 
 // Các hành động mô phỏng người dùng khi thu thập bằng HTML
 const ACTIONS = {
     // CLICK_WHEN_APPEAR: 'Click when appear',
     // SHOW_ALL: 'Show all'
-};
+}
 
 // Loại thu thập
 const CRAWL_TYPES = {
     HTML: 'HTML',
     API: 'API',
     RSS: 'RSS'
-};
+}
 
 // Kết quả thu thập
 const CRAWL_RESULT_TYPES = {
     SINGLE: 'Single',
     MULTIPLE: 'Multiple'
-};
+}
 
 // Cách thu thập
 const CRAWL_DATA_TYPES = {
     CONTENT: 'content',
     COUNT: 'count',
     ATTRIBUTE: 'attribute'
-};
+}
 
 // Hằng số về loại tài khoản
 const ACCOUNT_TYPES = {
     USER_TYPE_NAME: 'Người dùng', 
-};
+}
 
 // Các hằng cho cấu hình "con" khi tạo mới
 // - Các giá trị này chỉ dùng để hiển thị (nếu cần)
@@ -133,7 +120,6 @@ const CHILD_CONFIGS = {
 
 // Export các hằng số
 module.exports = {
-    DELIMITER_CHARACTERS,
     HTTP_METHODS,
     HTTP_STATUS,
     ERROR_CODES,
@@ -144,5 +130,6 @@ module.exports = {
     ACCOUNT_TYPES,
     CHILD_CONFIGS,
     SCHEDULE,
+    DATA_DIR,
     BACKUPS
-};
+}

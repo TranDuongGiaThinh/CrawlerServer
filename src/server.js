@@ -18,6 +18,7 @@ const websiteRoute = require('./routes/website_route.js')
 const renewalPackageRoute = require('./routes/renewal_package_route.js')
 const userTypeRoute = require('./routes/user_type_route.js')
 const packageUserRoute = require('./routes/package_user_route.js')
+const settingRoute = require('./routes/setting_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -56,6 +57,9 @@ app.use('/user-type', userTypeRoute)
 
 // route lịch sử đăng ký gói thành viên
 app.use('/package-user', packageUserRoute)
+
+// route cái đặt website
+app.use('/setting', settingRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
