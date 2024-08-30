@@ -1,7 +1,6 @@
 const {HTTP_STATUS} = require('../untils/constants')
 const settingService = require('../services/setting_service')
 
-const multer = require('multer')
 const path = require('path')
 const fs = require('fs');
 

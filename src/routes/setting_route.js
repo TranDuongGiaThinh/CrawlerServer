@@ -5,7 +5,6 @@ const multer = require('multer')
 
 const route = express.Router()
 
-
 // Đặt đường dẫn đến thư mục 'data'
 const dataDir = path.join(__dirname, '../../', 'data')
 
