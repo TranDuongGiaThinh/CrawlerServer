@@ -28,7 +28,7 @@ exports.checkNameExists = async (req, res) => {
         if (!name) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
-            });
+            })
         }
 
         if (id) {
@@ -37,7 +37,7 @@ exports.checkNameExists = async (req, res) => {
             if (!checkExists) {
                 return res.status(HTTP_STATUS.NOT_FOUND).json({
                     message: 'Gói gia hạn không tồn tại!'
-                });
+                })
             }
         }
 
@@ -67,7 +67,7 @@ exports.add = async (req, res) => {
         if (!type || !description || !promotion || !days) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
-            });
+            })
         }
 
         // Kiểm tra tên gói đã tồn tại
@@ -75,21 +75,21 @@ exports.add = async (req, res) => {
         if (exists) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tên gói đã tồn tại!'
-            });
+            })
         }
 
         // Kiểm tra số ngày hợp lệ
         if (isNaN(days) || days <= 0) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tham số days phải là số dương lớn hơn 0!'
-            });
+            })
         }
 
         // Kiểm tra giá trị khuyến mãi hợp lệ
         if (isNaN(promotion) || promotion < 0 || promotion > 100) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tham số promotion phải nằm trong khoảng từ 0 đến 100!'
-            });
+            })
         }
 
         // Thực hiện thêm
@@ -116,7 +116,7 @@ exports.update = async (req, res) => {
         if (!id || !type || !description || !promotion || !days) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
-            });
+            })
         }
 
         // Kiểm tra gói có tồn tại
@@ -124,7 +124,7 @@ exports.update = async (req, res) => {
         if (!checkExists) {
             return res.status(HTTP_STATUS.NOT_FOUND).json({
                 message: 'Gói gia hạn không tồn tại!'
-            });
+            })
         }
 
         // Kiểm tra tên gói đã tồn tại
@@ -132,21 +132,21 @@ exports.update = async (req, res) => {
         if (checkNameExists) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tên gói đã tồn tại!'
-            });
+            })
         }
 
         // Kiểm tra số ngày hợp lệ
         if (isNaN(days) || days <= 0) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tham số days phải là số dương lớn hơn 0!'
-            });
+            })
         }
 
         // Kiểm tra giá trị khuyến mãi hợp lệ
         if (isNaN(promotion) || promotion < 0 || promotion > 100) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Tham số promotion phải nằm trong khoảng từ 0 đến 100!'
-            });
+            })
         }
 
         // Thực hiện cập nhật
@@ -173,7 +173,7 @@ exports.delete = async (req, res) => {
         if (!id) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
-            });
+            })
         }
 
         // Kiểm tra gói có tồn tại
@@ -181,7 +181,7 @@ exports.delete = async (req, res) => {
         if (!checkExists) {
             return res.status(HTTP_STATUS.NOT_FOUND).json({
                 message: 'Gói gia hạn không tồn tại!'
-            });
+            })
         }
 
         // Thực hiện xóa

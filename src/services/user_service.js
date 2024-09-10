@@ -19,7 +19,119 @@ exports.checkUserExists = async (userId) => {
         }
     })
 
-    if(user) return true
+    return user ? true : false
+}
 
-    return false;
+// Đăng ký tài khoản người dùng
+exports.add = async (username, password, fullname, email, phone) => {
+    const userAccountType = await AccountTypeModel.findOne({
+        where: {
+            is_admin: false
+        }
+    })
+
+    const newUser = await UserModel.create({
+        account_type_id: userAccountType.id,
+        username,
+        password,
+        fullname,
+        email,
+        phone,
+        config_count: 0,
+        export_count: 0,
+        locked: false
+    })
+
+    return newUser
+}
+
+// Kiểm tra tên đăng nhập đã tồn tại
+exports.checkUsernameExists = async (username) => {
+    const user = await UserModel.findOne({
+        where: {
+            username: username
+        }
+    })
+
+    return user ? true : false
+}
+
+// Kiểm tra đăng nhập
+exports.checkLogin = async (username, password) => {
+    const user = await UserModel.findOne({
+        where: {
+            username: username,
+            password: password
+        }
+    })
+
+    return user
+}
+
+// Lấy thông tin tài khoản người dùng
+exports.getUser = async (userId) => {
+    const user = await UserModel.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    return user
+}
+
+// Lấy danh sách người dùng
+exports.getAllUser = async () => {
+    const adminAccountType = await AccountTypeModel.findOne({
+        where: {
+            is_admin: true
+        }
+    })
+
+    const users = await UserModel.findAll({
+        where: {
+            account_type_id: {
+                [Sequelize.Op.ne]: adminAccountType.id
+            }
+        }
+    })
+
+    return users
+}
+
+// Tìm kiếm người dùng bằng từ khóa
+exports.search = async (username) => {
+    const adminAccountType = await AccountTypeModel.findOne({
+        where: {
+            is_admin: true
+        }
+    })
+
+    const users = await UserModel.findOne({
+        where: {
+            username: username,
+            account_type_id: {
+                [Sequelize.Op.ne]: adminAccountType.id
+            }
+        }
+    })
+
+    return users
+}
+
+// Khóa tài khoản người dùng
+exports.lockUser = async (userId) => {
+    const user = await UserModel.findByPk(userId)
+
+    user.locked = true
+
+    await user.save()
+}
+
+// Mở khóa tài khoản người dùng
+exports.unlockUser = async (userId) => {
+    const user = await UserModel.findByPk(userId)
+
+    user.locked = false
+
+    await user.save()
 }
