@@ -20,6 +20,7 @@ const userTypeRoute = require('./routes/user_type_route.js')
 const packageUserRoute = require('./routes/package_user_route.js')
 const settingRoute = require('./routes/setting_route.js')
 const userRoute = require('./routes/user_route.js')
+const backupRoute = require('./routes/backup_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -59,11 +60,14 @@ app.use('/user-type', userTypeRoute)
 // route lịch sử đăng ký gói thành viên
 app.use('/package-user', packageUserRoute)
 
-// route cái đặt setting
+// route cài đặt setting
 app.use('/setting', settingRoute)
 
-// route cái đặt user
+// route user
 app.use('/user', userRoute)
+
+// route backup
+app.use('/backup', backupRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
