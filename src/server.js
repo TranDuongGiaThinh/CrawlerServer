@@ -21,6 +21,7 @@ const packageUserRoute = require('./routes/package_user_route.js')
 const settingRoute = require('./routes/setting_route.js')
 const userRoute = require('./routes/user_route.js')
 const backupRoute = require('./routes/backup_route.js')
+const crawlConfigRoute = require('./routes/crawl_config_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -43,7 +44,7 @@ app.use('/crawl-type', crawlTypeRoute)
 app.use('/http-method', httpMethodRoute)
 
 // route loại kết quả trả về khi thu thập
-app.use('/crawl-result-type', crawlResultTypeRoute)
+app.use('/crawl-result-type', crawlResultTypeRoute) 
 
 // route chủ đề thu thập
 app.use('/item-type', itemTypeRoute)
@@ -68,6 +69,9 @@ app.use('/user', userRoute)
 
 // route backup
 app.use('/backup', backupRoute)
+
+// route cấu hình thu thập
+app.use('/crawl-config', crawlConfigRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
