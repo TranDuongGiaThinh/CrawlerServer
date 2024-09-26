@@ -18,6 +18,9 @@ route.get('/check-is-complete/:config_id', controller.checkIsComplete)
 // Tạo mới cấu hình
 route.post('/add', controller.add)
 
+// Cập nhật cấu hình
+route.patch('/update', controller.update)
+
 // Cập nhật trạng thái hoàn thành của cấu hình
 route.patch('/complete/:config_id', controller.complete)
 

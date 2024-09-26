@@ -122,10 +122,10 @@ exports.checkIsComplete = async (req, res) => {
 // Tạo mới cấu hình
 exports.add = async (req, res) => {
     try {
-        const { user_id, name, description, url, website_id } = req.body
+        const { user_id, name, description, url, website_id, crawl_type_id } = req.body
 
         // Kiểm tra tham số đầu vào
-        if (!user_id || !name || !description || !url || !website_id) {
+        if (!user_id || !name || !description || !url || !website_id || !crawl_type_id) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
             })
@@ -156,7 +156,7 @@ exports.add = async (req, res) => {
         }
 
         // Thực hiện thêm
-        const newConfig = await crawlConfigService.add(user_id, name, description, url, website_id)
+        const newConfig = await crawlConfigService.add(user_id, name, description, url, website_id, crawl_type_id)
         
         res.status(HTTP_STATUS.OK).json({
             config: newConfig,
@@ -165,6 +165,43 @@ exports.add = async (req, res) => {
     } catch (error) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi thực hiện tạo cấu hình!',
+            error: error
+        })
+    }
+}
+
+// Cập nhật cấu hình
+exports.update = async (req, res) => {
+    try {
+        const { id, result_type_id, item_type_id, http_method_id, item_selector, headers_api, body_api } = req.body
+
+        // Kiểm tra tham số đầu vào
+        if (!id || !result_type_id || !item_type_id || !http_method_id || !item_selector || !headers_api || !body_api) {
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
+                message: 'Thiếu tham số đầu vào!'
+            })
+        }
+
+        // Kiểm tra trạng thái của cấu hình
+        const checkIsComplete = await crawlConfigService.checkIsComplete(id)
+        if (checkIsComplete) {
+            return res.status(HTTP_STATUS.FORBIDDEN).json({
+                message: 'Không thể chỉnh sửa cấu hình đã hoàn thành!'
+            })
+        }
+
+        // Thực hiện cập nhật
+        const configUpdated = await crawlConfigService.update(
+            id, result_type_id, item_type_id, http_method_id, item_selector, headers_api, body_api
+        )
+        
+        res.status(HTTP_STATUS.OK).json({
+            config: configUpdated,
+            message: 'Cập nhật cấu hình thành công!'
+        })
+    } catch (error) {
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+            message: 'Lỗi khi thực hiện cập nhật cấu hình!',
             error: error
         })
     }

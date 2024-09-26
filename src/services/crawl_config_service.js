@@ -55,15 +55,14 @@ exports.checkIsComplete = async (configId) => {
 }
 
 // Tạo mới cấu hình
-exports.add = async (
-    userId, name, description, url, websiteId) => {
+exports.add = async (userId, name, description, url, websiteId, crawlTypeId) => {
     const newCrawlConfig = await CrawlConfigModel.create({
         parent_id: null,
         user_id: userId,
         name: name,
         description: description,
         url: url,
-        crawl_type_id: -1,
+        crawl_type_id: crawlTypeId,
         result_type_id: -1,
         item_type_id: -1,
         website_id: websiteId,
@@ -85,6 +84,23 @@ exports.add = async (
     }
 
     return newCrawlConfig
+}
+
+// Tạo mới cấu hình
+exports.update = async (configId, resultTypeId, itemTypeId, httpMethodId, itemSelector, heardersApi, bodyApi) => {
+    const config = await CrawlConfigModel.findByPk(configId)
+
+    config.result_type_id = resultTypeId
+    config.item_type_id = itemTypeId
+    config.http_method_id = httpMethodId
+    config.item_selector = itemSelector
+    config.headers_api = heardersApi
+    config.body_api = bodyApi
+    config.update_at = Date.now()
+
+    await config.save()
+
+    return config
 }
 
 // Cập nhật trạng thái hoàn thành của cấu hình
