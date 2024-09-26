@@ -22,6 +22,7 @@ const settingRoute = require('./routes/setting_route.js')
 const userRoute = require('./routes/user_route.js')
 const backupRoute = require('./routes/backup_route.js')
 const crawlConfigRoute = require('./routes/crawl_config_route.js')
+const crawlDetailRoute = require('./routes/crawl_detail_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -72,6 +73,9 @@ app.use('/backup', backupRoute)
 
 // route cấu hình thu thập
 app.use('/crawl-config', crawlConfigRoute)
+
+// route chi tiết cấu hình thu thập
+app.use('/crawl-detail', crawlDetailRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
