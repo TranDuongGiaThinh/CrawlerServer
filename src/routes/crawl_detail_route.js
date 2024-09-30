@@ -10,9 +10,12 @@ route.post('/add', controller.add)
 route.put('/update', controller.update)
 
 // Xóa chi tiết cấu hình
-route.delete('/delete/:config_id', controller.delete)
+route.delete('/delete/:id', controller.delete)
 
 // Lấy danh sách chi tiết cấu hình của một cấu hình
-route.get('/get-all-of-config/:config_id', controller.getAll)
+route.get('/get-all-of-config/:config_id', controller.getAllOfConfig)
+
+// Kiểm tra tên chi tiết cấu hình của một cấu hình đã tồn tại
+route.get('/check-name-exists', controller.checkNameExists)
 
 module.exports = route
