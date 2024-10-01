@@ -198,3 +198,22 @@ exports.checkNameExists = async (req, res) => {
         })
     }
 }
+
+// Kiểm tra thứ tự thực hiện chi tiết cấu hình của một cấu hình đã tồn tại
+exports.checkSortIndexExists = async (req, res) => {
+    try {
+        const {index, config_id} = req.query
+
+        const checkResult = await crawlDetailService.checkSortIndexExists(config_id, index)
+        
+        res.status(HTTP_STATUS.OK).json({
+            check_result: checkResult,
+            message: 'Kiểm tra thứ tự thực hiện chi tiết cấu hình thành công!'
+        })
+    } catch (error) {
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+            message: 'Lỗi khi kiểm tra thứ tự thực hiện chi tiết cấu hình!',
+            error: error.message
+        })
+    }
+}

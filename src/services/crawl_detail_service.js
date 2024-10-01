@@ -1,4 +1,5 @@
 const CrawlDetailModel = require('../models/crawl_detail_model')
+const CrawlActionDetailModel = require('../models/crawl_action_detail_model')
 const Sequelize = require('sequelize')
 
 // Thêm chi tiết cấu hình
@@ -56,24 +57,24 @@ exports.getAllOfConfig = async (configId) => {
 
 // Kiểm tra chi tiết cấu hình đã tồn tại
 exports.checkExists = async (id) => {
-    const crawlDetails = await CrawlDetailModel.findByPk(id)
+    const crawlDetail = await CrawlDetailModel.findByPk(id)
 
-    return crawlDetails ? true : false
+    return crawlDetail ? true : false
 }
 
 // Kiểm tra tên chi tiết cấu hình đã tồn tại
 exports.checkNameExists = async (configId, name) => {
-    const crawlDetails = await CrawlDetailModel.findOne({
+    const crawlDetail = await CrawlDetailModel.findOne({
         where: {
             crawl_config_id: configId,
             name: name
         }
     })
 
-    return crawlDetails ? true : false
+    return crawlDetail ? true : false
 }
 exports.checkNameExistsWithId = async (id, configId, name) => {
-    const crawlDetails = await CrawlDetailModel.findOne({
+    const crawlDetail = await CrawlDetailModel.findOne({
         where: {
             id: {[Sequelize.Op.ne]: id},
             crawl_config_id: configId,
@@ -81,22 +82,29 @@ exports.checkNameExistsWithId = async (id, configId, name) => {
         }
     })
 
-    return crawlDetails ? true : false
+    return crawlDetail ? true : false
 }
 
 // Kiểm thứ tự sắp xếp của chi tiết cấu hình  đã tồn tại
 exports.checkSortIndexExists = async (configId, sortIndex) => {
-    const crawlDetails = await CrawlDetailModel.findOne({
+    const crawlDetail = await CrawlDetailModel.findOne({
         where: {
             crawl_config_id: configId,
             sort_index: sortIndex
         }
     })
 
-    return crawlDetails ? true : false
+    const crawlActionDetail = await CrawlActionDetailModel.findOne({
+        where: {
+            crawl_config_id: configId,
+            sort_index: sortIndex
+        }
+    })
+
+    return crawlDetail || crawlActionDetail ? true : false
 }
 exports.checkSortIndexExistsWithId = async (id, configId, sortIndex) => {
-    const crawlDetails = await CrawlDetailModel.findOne({
+    const crawlDetail = await CrawlDetailModel.findOne({
         where: {
             id: {[Sequelize.Op.ne]: id},
             crawl_config_id: configId,
@@ -104,5 +112,12 @@ exports.checkSortIndexExistsWithId = async (id, configId, sortIndex) => {
         }
     })
 
-    return crawlDetails ? true : false
+    const crawlActionDetail = await CrawlActionDetailModel.findOne({
+        where: {
+            crawl_config_id: configId,
+            sort_index: sortIndex
+        }
+    })
+
+    return crawlDetail || crawlActionDetail ? true : false
 }
