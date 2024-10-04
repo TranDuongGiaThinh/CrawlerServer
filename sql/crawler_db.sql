@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2024 at 11:48 AM
+-- Generation Time: Oct 03, 2024 at 04:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,13 +49,35 @@ INSERT INTO `account_types` (`id`, `type`, `description`, `is_admin`) VALUES
 --
 
 CREATE TABLE `auto_crawls` (
-  `id` int(11) NOT NULL,
   `crawl_config_id` int(11) NOT NULL,
   `crawl_time` time NOT NULL,
   `expiry_time` date NOT NULL,
   `is_crawling` tinyint(1) NOT NULL,
   `update_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crawl_action_details`
+--
+
+CREATE TABLE `crawl_action_details` (
+  `id` int(11) NOT NULL,
+  `crawl_config_id` int(11) NOT NULL,
+  `action_type_id` int(11) NOT NULL,
+  `sort_index` int(11) NOT NULL,
+  `selector` text NOT NULL,
+  `value` text DEFAULT NULL,
+  `is_list` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `crawl_action_details`
+--
+
+INSERT INTO `crawl_action_details` (`id`, `crawl_config_id`, `action_type_id`, `sort_index`, `selector`, `value`, `is_list`) VALUES
+(3, 1, 1, 3, '.bac', 'ada', 0);
 
 -- --------------------------------------------------------
 
@@ -86,7 +108,7 @@ INSERT INTO `crawl_action_types` (`id`, `type`, `description`, `have_value`, `ha
 
 CREATE TABLE `crawl_configs` (
   `id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
@@ -102,6 +124,16 @@ CREATE TABLE `crawl_configs` (
   `is_completed` tinyint(1) NOT NULL,
   `update_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `crawl_configs`
+--
+
+INSERT INTO `crawl_configs` (`id`, `parent_id`, `user_id`, `name`, `description`, `url`, `crawl_type_id`, `result_type_id`, `item_type_id`, `website_id`, `item_selector`, `http_method_id`, `headers_api`, `body_api`, `is_completed`, `update_at`) VALUES
+(1, NULL, 2, 'Tên cấu hình', 'Mô tả', 'https://tiki.vn/', 1, 1, 1, 1, NULL, NULL, NULL, NULL, 1, '2024-09-25'),
+(2, NULL, 2, 'Tên cấu hình cần tạo', 'Mô tả cấu hình cần tạo', 'https://tiki.vn/', -1, -1, -1, 1, '', -1, '', '', 0, '0000-00-00'),
+(3, NULL, 2, 'Tên cấu hình cần tạo2', 'Mô tả cấu hình cần tạo', 'https://tiki.vn/', -1, -1, -1, 1, '', -1, '', '', 0, '2024-09-25'),
+(4, NULL, 2, 'Tên cấu hình cần tạo2222', 'Mô tả cấu hình cần tạo', 'https://tiki.vn/', 1, -99, -99, 1, '99', 999, '999', '999', 1, '2024-09-26');
 
 -- --------------------------------------------------------
 
@@ -138,13 +170,21 @@ CREATE TABLE `crawl_details` (
   `crawl_config_id` int(11) NOT NULL,
   `sort_index` int(11) NOT NULL,
   `data_type_id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
+  `name` text NOT NULL,
   `selector` text NOT NULL,
-  `attribute` text NOT NULL,
+  `attribute` text DEFAULT NULL,
   `is_primary_key` tinyint(1) NOT NULL,
   `is_detail_url` tinyint(1) NOT NULL,
   `is_contain_keywords` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `crawl_details`
+--
+
+INSERT INTO `crawl_details` (`id`, `crawl_config_id`, `sort_index`, `data_type_id`, `name`, `selector`, `attribute`, `is_primary_key`, `is_detail_url`, `is_contain_keywords`) VALUES
+(2, 1, 11, 1, 'adkakd', 'eqe', NULL, 1, 1, 1),
+(3, 1, 2, 22, 'kakda', 'sfijf', NULL, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -193,22 +233,6 @@ INSERT INTO `crawl_types` (`id`, `type`, `description`, `have_http_method`, `hav
 -- --------------------------------------------------------
 
 --
--- Table structure for table `craw_action_details`
---
-
-CREATE TABLE `craw_action_details` (
-  `id` int(11) NOT NULL,
-  `crawl_config_id` int(11) NOT NULL,
-  `action_type_id` int(11) NOT NULL,
-  `sort_index` int(11) NOT NULL,
-  `selector` text NOT NULL,
-  `value` text DEFAULT NULL,
-  `is_list` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `http_methods`
 --
 
@@ -250,7 +274,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `crawl_config_id`, `item_type_id`, `website_id`, `update_at`) VALUES
-(1, 1, 1, 1, '2024-08-01');
+(1, 1, 1, 1, '2024-07-29');
 
 -- --------------------------------------------------------
 
@@ -313,7 +337,7 @@ CREATE TABLE `package_users` (
 --
 
 INSERT INTO `package_users` (`id`, `user_id`, `user_type`, `renewal_package`, `days`, `total_price`, `max_auto_config`, `max_config`, `max_export`, `is_active`, `create_at`) VALUES
-(1, 2, 'tên gói thành viên', 'tên gói gia hạn', 30, 100000, 5, 20, 100, 0, '2024-08-23');
+(1, 2, 'tên gói thành viên', 'tên gói gia hạn', 30, 100000, 5, 20, 100, 1, '2024-08-20');
 
 -- --------------------------------------------------------
 
@@ -385,7 +409,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `account_type_id`, `username`, `password`, `fullname`, `email`, `phone`, `config_count`, `export_count`, `locked`) VALUES
 (1, 1, 'admin', '123456', 'adminstrator', 'adminstrator@gmail.com', '0999999999', 0, 0, 0),
-(2, 2, 'tdgthinh', '123456', 'Trần Dương Gia Thịnh', 'tdgthinh@gmail.com', '0987654321', 0, 0, 0),
+(2, 2, 'tdgthinh', '123456', 'Trần Dương Gia Thịnh', 'tdgthinh@gmail.com', '0987654321', 19, 0, 0),
 (3, 2, 'tdgthinh2', '123456789', 'Trần Dương Gia Thịnh', 'tdgthinh@gmail.com', '0987654321', 0, 0, 0);
 
 -- --------------------------------------------------------
@@ -447,6 +471,12 @@ ALTER TABLE `account_types`
 -- Indexes for table `auto_crawls`
 --
 ALTER TABLE `auto_crawls`
+  ADD PRIMARY KEY (`crawl_config_id`);
+
+--
+-- Indexes for table `crawl_action_details`
+--
+ALTER TABLE `crawl_action_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -483,12 +513,6 @@ ALTER TABLE `crawl_result_types`
 -- Indexes for table `crawl_types`
 --
 ALTER TABLE `crawl_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `craw_action_details`
---
-ALTER TABLE `craw_action_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -562,10 +586,10 @@ ALTER TABLE `account_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `auto_crawls`
+-- AUTO_INCREMENT for table `crawl_action_details`
 --
-ALTER TABLE `auto_crawls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `crawl_action_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `crawl_action_types`
@@ -577,7 +601,7 @@ ALTER TABLE `crawl_action_types`
 -- AUTO_INCREMENT for table `crawl_configs`
 --
 ALTER TABLE `crawl_configs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `crawl_data_types`
@@ -589,7 +613,7 @@ ALTER TABLE `crawl_data_types`
 -- AUTO_INCREMENT for table `crawl_details`
 --
 ALTER TABLE `crawl_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `crawl_result_types`
@@ -602,12 +626,6 @@ ALTER TABLE `crawl_result_types`
 --
 ALTER TABLE `crawl_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `craw_action_details`
---
-ALTER TABLE `craw_action_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `http_methods`
@@ -655,7 +673,7 @@ ALTER TABLE `setting`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_types`
