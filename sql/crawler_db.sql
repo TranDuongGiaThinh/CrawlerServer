@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2024 at 04:33 PM
+-- Generation Time: Oct 08, 2024 at 04:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -51,10 +51,17 @@ INSERT INTO `account_types` (`id`, `type`, `description`, `is_admin`) VALUES
 CREATE TABLE `auto_crawls` (
   `crawl_config_id` int(11) NOT NULL,
   `crawl_time` time NOT NULL,
-  `expiry_time` date NOT NULL,
+  `expiry_date` date NOT NULL,
   `is_crawling` tinyint(1) NOT NULL,
   `update_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `auto_crawls`
+--
+
+INSERT INTO `auto_crawls` (`crawl_config_id`, `crawl_time`, `expiry_date`, `is_crawling`, `update_at`) VALUES
+(1, '06:00:00', '2024-10-16', 0, '2024-10-02');
 
 -- --------------------------------------------------------
 
@@ -77,7 +84,8 @@ CREATE TABLE `crawl_action_details` (
 --
 
 INSERT INTO `crawl_action_details` (`id`, `crawl_config_id`, `action_type_id`, `sort_index`, `selector`, `value`, `is_list`) VALUES
-(3, 1, 1, 3, '.bac', 'ada', 0);
+(4, 6, 2, -1, '.cancel-button-top', NULL, 0),
+(5, 6, 3, 0, '.button.btn-show-more.button__show-more-product', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -98,7 +106,9 @@ CREATE TABLE `crawl_action_types` (
 --
 
 INSERT INTO `crawl_action_types` (`id`, `type`, `description`, `have_value`, `have_selector`) VALUES
-(1, 'click', 'Ấn vào một đối tượng', 0, 1);
+(1, 'Click', 'Ấn vào một đối tượng', 0, 1),
+(2, 'Click when appear', 'Ấn vào khi một phần tử chỉ định xuất hiện', 0, 1),
+(3, 'Show all', 'Ấn vào nút \'Xem Thêm\' cho đến khi nó không còn xuất hiện', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -130,10 +140,8 @@ CREATE TABLE `crawl_configs` (
 --
 
 INSERT INTO `crawl_configs` (`id`, `parent_id`, `user_id`, `name`, `description`, `url`, `crawl_type_id`, `result_type_id`, `item_type_id`, `website_id`, `item_selector`, `http_method_id`, `headers_api`, `body_api`, `is_completed`, `update_at`) VALUES
-(1, NULL, 2, 'Tên cấu hình', 'Mô tả', 'https://tiki.vn/', 1, 1, 1, 1, NULL, NULL, NULL, NULL, 1, '2024-09-25'),
-(2, NULL, 2, 'Tên cấu hình cần tạo', 'Mô tả cấu hình cần tạo', 'https://tiki.vn/', -1, -1, -1, 1, '', -1, '', '', 0, '0000-00-00'),
-(3, NULL, 2, 'Tên cấu hình cần tạo2', 'Mô tả cấu hình cần tạo', 'https://tiki.vn/', -1, -1, -1, 1, '', -1, '', '', 0, '2024-09-25'),
-(4, NULL, 2, 'Tên cấu hình cần tạo2222', 'Mô tả cấu hình cần tạo', 'https://tiki.vn/', 1, -99, -99, 1, '99', 999, '999', '999', 1, '2024-09-26');
+(5, NULL, 2, 'Thu thập chi tiết sản phẩm của CellphoneS dựa trên cấu trúc HTML', 'mô tả, ghi chú', 'https://cellphones.com.vn/iphone-13.html', 1, 2, 1, 2, NULL, NULL, NULL, NULL, 0, '2024-10-08'),
+(6, NULL, 2, 'Thu thập danh sách điện thoại của CellphoneS dựa trên HTML', 'Mô tả, ghi chú', 'https://cellphones.com.vn/mobile.html', 1, 1, 1, 2, '.product-info-container.product-item', NULL, NULL, NULL, 0, '2024-10-08');
 
 -- --------------------------------------------------------
 
@@ -184,7 +192,12 @@ CREATE TABLE `crawl_details` (
 
 INSERT INTO `crawl_details` (`id`, `crawl_config_id`, `sort_index`, `data_type_id`, `name`, `selector`, `attribute`, `is_primary_key`, `is_detail_url`, `is_contain_keywords`) VALUES
 (2, 1, 11, 1, 'adkakd', 'eqe', NULL, 1, 1, 1),
-(3, 1, 2, 22, 'kakda', 'sfijf', NULL, 0, 0, 0);
+(3, 1, 2, 22, 'kakda', 'sfijf', NULL, 0, 0, 0),
+(4, 5, 1, 1, 'Tên sản phẩm', 'h1', NULL, 0, 0, 1),
+(5, 5, 2, 1, 'Giá', 'div.tpt-box.active p.tpt---sale-price', NULL, 0, 0, 0),
+(7, 6, 1, 1, 'Tên sản phẩm', 'h3', NULL, 0, 0, 1),
+(8, 6, 2, 4, 'Url trang chi tiết', 'a.product__link', 'href', 1, 1, 0),
+(9, 6, 3, 1, 'Giá', '.product__price--show', NULL, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -589,19 +602,19 @@ ALTER TABLE `account_types`
 -- AUTO_INCREMENT for table `crawl_action_details`
 --
 ALTER TABLE `crawl_action_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `crawl_action_types`
 --
 ALTER TABLE `crawl_action_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `crawl_configs`
 --
 ALTER TABLE `crawl_configs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `crawl_data_types`
@@ -613,7 +626,7 @@ ALTER TABLE `crawl_data_types`
 -- AUTO_INCREMENT for table `crawl_details`
 --
 ALTER TABLE `crawl_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `crawl_result_types`
