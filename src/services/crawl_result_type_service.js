@@ -6,3 +6,10 @@ exports.getAll = async () => {
 
     return crawlDataTypes
 }
+
+// Lấy loại kết quả trả về khi thu thập
+exports.get = async (id) => {
+    const crawlDataType = await CrawlResultTypeModel.findByPk(id)
+
+    return crawlDataType
+}

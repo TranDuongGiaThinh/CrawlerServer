@@ -2,6 +2,10 @@ const CrawlActionDetailModel = require('../models/crawl_action_detail_model')
 const CrawlDetailModel = require('../models/crawl_detail_model')
 const Sequelize = require('sequelize')
 
+const crawlActionDetailService = require('../services/crawl_action_type_service')
+
+const {ACTIONS} = require('../untils/constants')
+
 // Thêm chi tiết hành động
 exports.add = async (configId, sortIndex, actionTypeId, selector, value, isList) => {
     const newCrawlActionDetail = await CrawlActionDetailModel.create({
@@ -91,4 +95,59 @@ exports.checkSortIndexExistsWithId = async (id, configId, sortIndex) => {
     })
 
     return crawlDetail || crawlActionDetail ? true : false
+}
+
+// Hàm thực hiện xử lý các hành động
+exports.handleActions = async (page, actions) => {
+    try {
+        for (const action of actions) {
+            const actionType = (await crawlActionDetailService.get(action.action_type_id)).type
+
+            if (actionType == ACTIONS.CLICK_WHEN_APPEAR) {
+                clickWhenAppear(page, action.selector)
+            } else if (actionType == ACTIONS.SHOW_ALL) {
+                await showAll(page, action.selector)
+            }
+        }
+    } catch (error) {
+        console.log('Lỗi khi thực hiện xử lý các hành động trong handleActions():', error)
+    }
+}
+
+// Xử lý sự kiện Show all
+const showAll = async (page, selector) => {	
+    while (true) {	
+        try {	
+            await page.click(selector)
+            await page.waitForSelector(selector, { visible: true, timeout: 5000 })
+
+            // Chờ 0.5 giây	
+            await new Promise(resolve => setTimeout(resolve, 500))
+        } catch (error) {	
+            break
+        }
+    }
+}
+
+// Xử lý sự kiện clickWhenAppear
+const clickWhenAppear = async (page, selector) => {
+    while (!page.isClosed()) {
+        try {
+            // Kiểm tra phần tử có tồn tại
+            const isElementVisible = await page.evaluate((selector) => {
+                const element = document.querySelector(selector)
+                return element != null
+            }, selector)
+
+            // Click phần tử nếu có
+            if (isElementVisible) {
+                await page.click(selector)
+                await new Promise(resolve => setTimeout(resolve, 500))
+            } else {
+                await new Promise(resolve => setTimeout(resolve, 1000))
+            }
+        } catch (error) {	
+            break
+        }
+    }
 }

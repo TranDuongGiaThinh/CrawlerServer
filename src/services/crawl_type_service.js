@@ -15,3 +15,10 @@ exports.getAll = async () => {
 
     return crawlTypes
 }
+
+// Lấy loại thu thập
+exports.get = async (id) => {
+    const crawlType = await CrawlTypeModel.findByPk(id)
+
+    return crawlType
+}

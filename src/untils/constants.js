@@ -6,28 +6,6 @@ const SCHEDULE = {
 
 }
 
-// Các hằng dùng cho backup
-const BACKUPS = {
-    // Thư mục chứa các file backup: ...\shop-server\backups
-    // Tên các file backup là: 'backup <thời gian tạo backup> .enc'
-    PATH: __dirname,
-    FOLDER_NAME: '../../../../backups',
-
-    // Tên file
-    // - Bắt đầu là 'backup'
-    // - Phần mở rộng là '.enc'
-    // - Ở giữa là thời gian tạo file (với định dạng 'yyyy_MM_dd_HHmmss')
-    FILE_PREFIX: 'backup',
-    FILE_EXTENSION: '.enc',
-    DATE_FORMAT: 'yyyy_MM_dd_HHmmss',
-}
-
-// Thư mục chứa các file phát sinh
-const DATA_DIR = {
-    FOLDER_PATH: '',
-    
-}
-
 // HTTP Status Codes
 const HTTP_STATUS = {
     OK: 200,
@@ -57,6 +35,11 @@ const ERROR_CODES = {
     API_NOT_FOUND: 'E004',
 }
 
+// Ký tự phân cách cac1 phần tử mảng
+const DELIMITER_CHARACTERS = {
+    ARRAY_DELIMITER: ', '
+}
+
 /* 
     ---------------------------------------------------------------------------------------
     CÁC HẰNG SỐ BÊN DƯỚI BẮT BUỘC PHẢI TRÙNG KHỚP VỚI GIÁ TRỊ TRONG CÁC BẢNG TRONG DATABASE
@@ -74,8 +57,9 @@ const HTTP_METHODS = {
 
 // Các hành động mô phỏng người dùng khi thu thập bằng HTML
 const ACTIONS = {
-    // CLICK_WHEN_APPEAR: 'Click when appear',
-    // SHOW_ALL: 'Show all'
+    CLICK: 'Click',
+    CLICK_WHEN_APPEAR: 'Click when appear',
+    SHOW_ALL: 'Show all'
 }
 
 // Loại thu thập
@@ -93,9 +77,9 @@ const CRAWL_RESULT_TYPES = {
 
 // Cách thu thập
 const CRAWL_DATA_TYPES = {
-    CONTENT: 'content',
-    COUNT: 'count',
-    ATTRIBUTE: 'attribute'
+    CONTENT: 'Content',
+    COUNT: 'Count',
+    ATTRIBUTE: 'Attribute'
 }
 
 // Hằng số về loại tài khoản
@@ -129,7 +113,6 @@ module.exports = {
     CRAWL_DATA_TYPES,
     ACCOUNT_TYPES,
     CHILD_CONFIGS,
-    SCHEDULE,
-    DATA_DIR,
-    BACKUPS
+    DELIMITER_CHARACTERS,
+    SCHEDULE
 }

@@ -6,3 +6,10 @@ exports.getAll = async () => {
 
     return crawlActionTypes
 }
+
+// Lấy loại hành động
+exports.get = async (id) => {
+    const crawlActionType = await CrawlActionTypeModel.findByPk(id)
+
+    return crawlActionType
+}

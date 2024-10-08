@@ -2,6 +2,24 @@ const CrawlConfigModel = require('../models/crawl_config_model')
 const userService = require('./user_service')
 const packageUserService = require('./package_user_service')
 
+// Lấy thông tin cấu hình
+exports.get = async (id) => {
+    const crawlConfig = await CrawlConfigModel.findByPk(id)
+
+    return crawlConfig
+}
+
+// Lấy danh sách các cấu hình con
+exports.getListChildConfigs = async (parentId) => {
+    const childConfigs = await CrawlConfigModel.findAll({
+        where: {
+            parent_id: parentId,
+        }
+    });
+
+    return childConfigs
+}
+
 // Kiểm tra cấu hình có tồn tại
 exports.checkExists = async (id) => {
     const crawlConfig = await CrawlConfigModel.findByPk(id)
