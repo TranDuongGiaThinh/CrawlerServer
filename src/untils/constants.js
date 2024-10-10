@@ -37,7 +37,8 @@ const ERROR_CODES = {
 
 // Ký tự phân cách cac1 phần tử mảng
 const DELIMITER_CHARACTERS = {
-    ARRAY_DELIMITER: ', '
+    ARRAY_DELIMITER: ', ',
+    MEMBER_ACCESS_CHARACTER: '.'
 }
 
 /* 

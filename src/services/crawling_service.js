@@ -69,35 +69,31 @@ exports.handleCrawlingData = async (crawlConfigInfor, browserObj) => {
                 browserObj
             )
         }
-    }// } else if (crawlType == CRAWL_TYPES.API) {
-    //     if(resultType == CRAWL_RESULT_TYPES.SINGLE) {
-    //         crawlResult = await apiCrawlService.singleCrawl(
-    //             crawlConfigInfor.crawl_config, 
-    //             crawlConfigInfor.crawl_details, 
-    //             crawlConfigInfor.crawl_option_details
-    //         )
-    //     } else if (resultType == CRAWL_RESULT_TYPES.MULTIPLE) {
-    //         crawlResult = await apiCrawlService.multiCrawl(
-    //             crawlConfigInfor.crawl_config, 
-    //             crawlConfigInfor.crawl_details, 
-    //             crawlConfigInfor.crawl_option_details
-    //         )
-    //     }
-    // } else if (crawlType == CRAWL_TYPES.RSS) {
-    //     if(resultType == CRAWL_RESULT_TYPES.SINGLE) {
-    //         crawlResult = await rssCrawlService.singleCrawl(
-    //             crawlConfigInfor.crawl_config, 
-    //             crawlConfigInfor.crawl_details, 
-    //             crawlConfigInfor.crawl_option_details
-    //         )
-    //     } else if (resultType == CRAWL_RESULT_TYPES.MULTIPLE) {
-    //         crawlResult = await rssCrawlService.multiCrawl(
-    //             crawlConfigInfor.crawl_config,
-    //             crawlConfigInfor.crawl_details, 
-    //             crawlConfigInfor.crawl_option_details
-    //         )
-    //     }
-    // }
+    } else if (crawlType == CRAWL_TYPES.API) {
+        if(resultType == CRAWL_RESULT_TYPES.SINGLE) {
+            crawlResult = await apiCrawlService.singleCrawl(
+                crawlConfigInfor.crawl_config, 
+                crawlConfigInfor.crawl_details
+            )
+        } else if (resultType == CRAWL_RESULT_TYPES.MULTIPLE) {
+            crawlResult = await apiCrawlService.multiCrawl(
+                crawlConfigInfor.crawl_config, 
+                crawlConfigInfor.crawl_details
+            )
+        }
+    } else if (crawlType == CRAWL_TYPES.RSS) {
+        if(resultType == CRAWL_RESULT_TYPES.SINGLE) {
+            crawlResult = await rssCrawlService.singleCrawl(
+                crawlConfigInfor.crawl_config, 
+                crawlConfigInfor.crawl_details
+            )
+        } else if (resultType == CRAWL_RESULT_TYPES.MULTIPLE) {
+            crawlResult = await rssCrawlService.multiCrawl(
+                crawlConfigInfor.crawl_config,
+                crawlConfigInfor.crawl_details
+            )
+        }
+    }
 
     // Thực hiện vào trang chi tiết của từng item (nếu có cấu hình con)
     const childConfigs = crawlConfigInfor.child_configs
