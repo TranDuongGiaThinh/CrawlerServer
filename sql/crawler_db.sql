@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2024 at 04:15 PM
+-- Generation Time: Oct 10, 2024 at 03:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -141,7 +141,10 @@ CREATE TABLE `crawl_configs` (
 
 INSERT INTO `crawl_configs` (`id`, `parent_id`, `user_id`, `name`, `description`, `url`, `crawl_type_id`, `result_type_id`, `item_type_id`, `website_id`, `item_selector`, `http_method_id`, `headers_api`, `body_api`, `is_completed`, `update_at`) VALUES
 (5, NULL, 2, 'Thu thập chi tiết sản phẩm của CellphoneS dựa trên cấu trúc HTML', 'mô tả, ghi chú', 'https://cellphones.com.vn/iphone-13.html', 1, 2, 1, 2, NULL, NULL, NULL, NULL, 0, '2024-10-08'),
-(6, NULL, 2, 'Thu thập danh sách điện thoại của CellphoneS dựa trên HTML', 'Mô tả, ghi chú', 'https://cellphones.com.vn/mobile.html', 1, 1, 1, 2, '.product-info-container.product-item', NULL, NULL, NULL, 0, '2024-10-08');
+(6, NULL, 2, 'Thu thập danh sách điện thoại của CellphoneS dựa trên HTML', 'Mô tả, ghi chú', 'https://cellphones.com.vn/mobile.html', 1, 1, 1, 2, '.product-info-container.product-item', NULL, NULL, NULL, 0, '2024-10-08'),
+(7, NULL, 2, 'Lấy chi tiết sản phẩm Tiki bằng API', 'mô tả', 'https://tiki.vn/api/v2/products/184036446?platform=web&spid=32033721&version=3', 2, 2, 1, 1, NULL, 1, NULL, NULL, 0, '2024-10-10'),
+(9, NULL, 2, 'Lấy danh sách sản phẩm Tiki bằng API', 'mô tả', 'https://tiki.vn/api/personalish/v1/blocks/listings?limit=40&include=advertisement&aggregations=2&version=home-persionalized&trackity_id=de9c7848-5276-89fb-a8cb-fd07fbc0b86b&category=1795&page=1&urlKey=dien-thoai-smartphone', 2, 1, 1, 1, 'data', 1, NULL, NULL, 0, '2024-10-10'),
+(10, NULL, 2, 'lấy danh sách tin tức của TuoiTre bằng rss', 'mô tả', 'https://tuoitre.vn/rss/thoi-su.rss', 3, 1, 13, 3, 'rss.channel.item', NULL, NULL, NULL, 0, '2024-10-10');
 
 -- --------------------------------------------------------
 
@@ -177,7 +180,7 @@ CREATE TABLE `crawl_details` (
   `id` int(11) NOT NULL,
   `crawl_config_id` int(11) NOT NULL,
   `sort_index` int(11) NOT NULL,
-  `data_type_id` int(11) NOT NULL,
+  `data_type_id` int(11) DEFAULT NULL,
   `name` text NOT NULL,
   `selector` text NOT NULL,
   `attribute` text DEFAULT NULL,
@@ -191,13 +194,22 @@ CREATE TABLE `crawl_details` (
 --
 
 INSERT INTO `crawl_details` (`id`, `crawl_config_id`, `sort_index`, `data_type_id`, `name`, `selector`, `attribute`, `is_primary_key`, `is_detail_url`, `is_contain_keywords`) VALUES
-(2, 1, 11, 1, 'adkakd', 'eqe', NULL, 1, 1, 1),
-(3, 1, 2, 22, 'kakda', 'sfijf', NULL, 0, 0, 0),
 (4, 5, 1, 1, 'Tên sản phẩm', 'h1', NULL, 0, 0, 1),
 (5, 5, 2, 1, 'Giá', 'div.tpt-box.active p.tpt---sale-price', NULL, 0, 0, 0),
 (7, 6, 1, 1, 'Tên sản phẩm', 'h3', NULL, 0, 0, 1),
 (8, 6, 2, 4, 'Url trang chi tiết', 'a.product__link', 'href', 1, 1, 0),
-(9, 6, 3, 1, 'Giá', '.product__price--show', NULL, 0, 0, 0);
+(9, 6, 3, 1, 'Giá', '.product__price--show', NULL, 0, 0, 0),
+(10, 7, 1, NULL, 'Link chi tiết sản phẩm', 'url_path', NULL, 1, 1, 0),
+(11, 7, 2, NULL, 'Tên sản phẩm', 'name', NULL, 0, 0, 1),
+(12, 7, 4, NULL, 'Url ảnh', 'thumbnail_url', NULL, 0, 0, 0),
+(13, 7, 3, NULL, 'Giá', 'price', NULL, 0, 0, 0),
+(14, 9, 1, NULL, 'Url chi tiết', 'url_path', NULL, 1, 1, 0),
+(15, 9, 2, NULL, 'Tên sản phẩm', 'name', NULL, 0, 0, 1),
+(16, 9, 3, NULL, 'Giá', 'price', NULL, 0, 0, 0),
+(17, 9, 4, NULL, 'Url ảnh', 'thumbnail_url', NULL, 0, 0, 0),
+(18, 10, 1, NULL, 'Link trang chi tiết', 'link', NULL, 1, 1, 0),
+(19, 10, 2, NULL, 'Tiêu đề tin tức', 'title', NULL, 0, 0, 1),
+(20, 10, 3, NULL, 'Mô tả tin tức', 'description', NULL, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -323,7 +335,8 @@ CREATE TABLE `item_types` (
 --
 
 INSERT INTO `item_types` (`id`, `type`, `description`, `user_id`) VALUES
-(1, 'điện thoại', 'loại dữ liệu là các sản phẩm gồm điện thoại, diện thoại thông minh', 2);
+(1, 'điện thoại', 'loại dữ liệu là các sản phẩm gồm điện thoại, diện thoại thông minh', 2),
+(5, 'Tin tức', 'Các sản phẩm thuộc loại tin tức', 2);
 
 -- --------------------------------------------------------
 
@@ -468,7 +481,8 @@ CREATE TABLE `websites` (
 
 INSERT INTO `websites` (`id`, `name`, `url`, `user_id`) VALUES
 (1, 'Tiki', 'tiki.vn', 2),
-(2, 'CellphoneS', 'cellphones.com.vn', 2);
+(2, 'CellphoneS', 'cellphones.com.vn', 2),
+(13, 'Tuổi trẻ', 'tuoitre.vn', 2);
 
 --
 -- Indexes for dumped tables
@@ -614,7 +628,7 @@ ALTER TABLE `crawl_action_types`
 -- AUTO_INCREMENT for table `crawl_configs`
 --
 ALTER TABLE `crawl_configs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `crawl_data_types`
@@ -626,7 +640,7 @@ ALTER TABLE `crawl_data_types`
 -- AUTO_INCREMENT for table `crawl_details`
 --
 ALTER TABLE `crawl_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `crawl_result_types`
@@ -662,7 +676,7 @@ ALTER TABLE `item_details`
 -- AUTO_INCREMENT for table `item_types`
 --
 ALTER TABLE `item_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `package_users`
@@ -698,7 +712,7 @@ ALTER TABLE `user_types`
 -- AUTO_INCREMENT for table `websites`
 --
 ALTER TABLE `websites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
