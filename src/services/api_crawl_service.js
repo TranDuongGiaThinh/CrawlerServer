@@ -78,7 +78,7 @@ exports.singleCrawl = async (crawlConfig, crawlDetails) => {
             data.push({ name, value, is_detail_url, is_contain_keywords, is_primary_key })
         }
 
-        return {items: data, errors}
+        return {items: [data], errors}
     } catch (error) {
         errors.push({ 
             error_at: '?', 
@@ -86,7 +86,7 @@ exports.singleCrawl = async (crawlConfig, crawlDetails) => {
             error_message: error.message
         })
 
-        return {items: data, errors}
+        return {items: [data], errors}
     }
 };
 

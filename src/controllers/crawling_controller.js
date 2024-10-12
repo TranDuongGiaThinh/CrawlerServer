@@ -2,6 +2,8 @@ const {HTTP_STATUS, DELIMITER_CHARACTERS} = require('../untils/constants')
 const crawlingService = require('../services/crawling_service')
 const userService = require('../services/user_service')
 const configService = require('../services/crawl_config_service')
+const itemService = require('../services/item_service')
+const itemDetailService = require('../services/item_detail_service')
 
 // Thực hiện thu thập
 exports.crawlData = async (req, res) => {
@@ -49,28 +51,25 @@ exports.crawlData = async (req, res) => {
         // Thực hiện thu thập
         const crawlResult = await crawling(crawlConfigInfor, browserObj)
 
+        // Đóng trình duyệt khi đã sử dụng xong
+        if (browserObj.browser) browserObj.browser.close()
+
         // Kiểm tra cấu hình đã hoàn thành
         const isComplete = await configService.checkIsComplete(crawl_config_id)
         if (isComplete) {
-            // Trả về 10 item đầu tiên thu thập được
-            res.status(HTTP_STATUS.OK).json({
-                items: crawlResult.items.slice(0, 10),
-                errors: crawlResult.errors,
-                message: 'Thu thập dữ liệu thành công!'
-            })
-
             // Lưu tất cả kết quả thu thập được vào database
-            ////////////////////////////////////
-            //////////////
-        } else {
-            // Trả về 10 item đầu tiên thu thập được
-            res.status(HTTP_STATUS.OK).json({
-                items: crawlResult.items.slice(0, 10),
-                errors: crawlResult.errors,
-                message: 'Thu thập dữ liệu thành công!'
-            })
-        }
+            await saveCrawlResult(crawlResult.items, config.item_type_id, config.website_id, config.id)
+        } 
 
+        // Trả về 10 item đầu tiên thu thập được
+        res.status(HTTP_STATUS.OK).json({
+            items: crawlResult.items.slice(0, 10).flatMap(subArray => subArray.map(item => ({
+                name: item.name,
+                value: item.value
+            }))),
+            errors: crawlResult.errors,
+            message: 'Thu thập dữ liệu thành công!'
+        })
     } catch (error) {
         // Đóng trình duyệt khi đã sử dụng xong
         if (browserObj.browser) browserObj.browser.close()
@@ -113,9 +112,6 @@ async function crawling(crawlConfigInfor, browserObj) {
         allItems.push(...items)
     }
 
-    // Đóng trình duyệt khi đã sử dụng xong
-    if (browserObj.browser) browserObj.browser.close()
-
     // Trả về kết quả
     return { crawl_config_infor: crawlConfigInfor, items: allItems, errors: allErrors }
 
@@ -124,4 +120,73 @@ async function crawling(crawlConfigInfor, browserObj) {
 // Hàm kiểm tra xem một lỗi đã tồn tại trong danh sách lỗi chưa
 function checkErrorExists(errors, name) {
     return errors.some(error => error.error_at === name);
+}
+
+// Hàm lưu kết quả thu thập được vào database
+async function saveCrawlResult(itemDatas, itemTypeId, websiteId, crawlConfigId) {
+    // Duyệt qua kết quả thu được - danh sách item
+    for (const item of itemDatas) {
+        const itemDetails = []
+
+        // Duyệt qua từng phần tử JSON trong mảng con
+        for (const itemDetail of item) {
+            // Lưu vào mảng để trả về
+            itemDetails.push({
+                name: itemDetail.name, 
+                value: itemDetail.value, 
+                is_detail_url: itemDetail.is_detail_url,
+                is_contain_keywords: itemDetail.is_contain_keywords,
+                is_primary_key: itemDetail.is_primary_key
+            })
+        }
+
+        await save(
+            {item_type_id: itemTypeId, website_id: websiteId, crawl_config_id: crawlConfigId},
+            itemDetails
+        )
+    }
+}
+
+// Lưu: cập nhật nếu đã tồn tại và tạo mới khi chưa tồn tại
+const save = async (itemData, itemDetailDatas) => {
+    // Khai báo
+    let url
+
+    // Lấy url
+    for (const itemDetail of itemDetailDatas) {
+        if (itemDetail.is_primary_key == true) {
+            url = itemDetail.value
+
+            break
+        }
+    }
+
+    // Kiểm tra item đã tồn tại
+    const itemPrimary =  await itemService.getIdItemByUrl(itemData.crawl_config_id, url)
+
+    // Nếu đã tồn tại, cập nhật
+    if (itemPrimary) {
+        // Lấy thông tin item
+        const item = await itemService.get(itemPrimary.id)
+
+        // Cập nhật chi tiết item
+        await itemDetailService.updateItemDetails(itemPrimary.id, itemDetailDatas)
+    }
+    // Thêm mới
+    else {
+        // Tạo item
+        const item = await itemService.add(itemData.item_type_id, itemData.website_id, itemData.crawl_config_id)
+
+        // Tạo các chi tiết item
+        for (const itemDetail of itemDetailDatas) {
+            await itemDetailService.add(
+                item.id, 
+                itemDetail.name, 
+                itemDetail.value, 
+                itemDetail.is_detail_url, 
+                itemDetail.is_primary_key,
+                itemDetail.is_contain_keywords,
+            )
+        }
+    }
 }

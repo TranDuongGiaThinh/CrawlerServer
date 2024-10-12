@@ -99,11 +99,11 @@ exports.singleCrawl = async (crawlConfig, crawlActionDetails, crawlDetails, brow
             itemDetails.push({ name, value: value, is_detail_url, is_contain_keywords, is_primary_key })
         }
 
-        return {items: itemDetails, errors}
+        return {items: [itemDetails], errors}
     } catch (error) {
         errors.push({ error_at: '?', error_code: ERROR_CODES.UNKNOWN_ERROR, error_message: error.message})
 
-        return {items: itemDetails, errors}
+        return {items: [itemDetails], errors}
     }
 }
 
