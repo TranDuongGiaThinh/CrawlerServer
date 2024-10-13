@@ -10,3 +10,10 @@ exports.getAllOfCrawlType = async (id) => {
 
     return crawlDataTypes
 }
+
+// Lấy loại cách lấy dữ liệu của loại thu thập
+exports.get = async (id) => {
+    const crawlDataType = await CrawlDataTypeModel.findByPk(id)
+
+    return crawlDataType
+}

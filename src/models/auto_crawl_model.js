@@ -3,14 +3,9 @@ const {sequelize, DataTypes} = require('../configs/db_config')
 const AutoCrawlModel = sequelize.define(
     'AutoCrawlModel',
     {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
         crawl_config_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            primaryKey: true
         },
         crawl_time: {
             type: DataTypes.TIME,

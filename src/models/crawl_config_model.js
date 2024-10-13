@@ -10,7 +10,7 @@ const CrawlConfigModel = sequelize.define(
         },
         parent_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -65,7 +65,7 @@ const CrawlConfigModel = sequelize.define(
             allowNull: false
         },
         update_at: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.DATE,
             allowNull: false
         }
     },

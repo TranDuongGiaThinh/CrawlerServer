@@ -1,4 +1,5 @@
 const PackageUserModel = require('../models/package_user_model')
+const UserModel = require('../models/user_model')
 
 // Lấy danh sách lịch sử đăng ký gói của người dùng
 exports.getAllOfUser = async (userId) => {
@@ -45,6 +46,13 @@ exports.add = async (userId, userType, renewalPackage, days, totalPrice, maxAuto
         is_active: true,
         create_at: Date.now()
     })
+
+    // Làm mới lại thông tin sử dụng trong tháng của người dùng
+    const user = await UserModel.findByPk(userId)
+
+    user.config_count = 0
+    user.export_count = 0
+    await user.save()
 
     return newPackageUser
 }

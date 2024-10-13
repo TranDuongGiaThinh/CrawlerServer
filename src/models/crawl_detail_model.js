@@ -18,7 +18,7 @@ const CrawlDetailModel = sequelize.define(
         },
         data_type_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         name: {
             type: DataTypes.TEXT,

@@ -11,11 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.4",
+    "api": "^6.1.2",
+    "axios": "^1.7.7",
     "body-parser": "^1.20.2",
-    "cookie-parser": "^1.4.6",
+    "cheerio": "^1.0.0",
+    "child_process": "^1.0.2",
+    "cookie-parser": "^1.0.0",
     "cors": "^2.8.5",
     "cron": "^3.1.7",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
@@ -25,6 +29,11 @@
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.4",
     "path": "^0.12.7",
-    "sequelize": "^6.37.3"
+    "pupeteer": "^0.0.1",
+    "puppeteer": "^23.5.1",
+    "run": "^1.5.0",
+    "sequelize": "^6.37.3",
+    "watch": "^0.13.0",
+    "xml2js": "^0.6.2"
   }
 }

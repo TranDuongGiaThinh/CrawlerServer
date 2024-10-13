@@ -78,9 +78,9 @@ exports.add = async (req, res) => {
         const {user_id, user_type, renewal_package, days, total_price, max_auto_config, max_config, max_export} = req.body
 
         // Kiểm tra đủ tham số đầu vào
-        if (user_id ==  null && user_type ==  null && renewal_package ==  null 
-            && days ==  null && total_price ==  null && max_auto_config ==  null 
-            && max_config ==  null && max_export ==  null) {
+        if (user_id ==  null || user_type ==  null || renewal_package ==  null 
+            || days ==  null || total_price ==  null || max_auto_config ==  null 
+            || max_config ==  null || max_export ==  null) {
                 return res.status(HTTP_STATUS.BAD_REQUEST).json({
                     message: 'Thiếu tham số đầu vào!'
                 });

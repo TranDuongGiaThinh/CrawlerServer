@@ -100,7 +100,7 @@ exports.updateIntroduction = async (req, res) => {
         if (!introduction) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
-            });
+            })
         }
 
         // Thực hiện cập nhật
@@ -127,7 +127,7 @@ exports.updateFooter = async (req, res) => {
         if (!footer) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
-            });
+            })
         }
 
         // Thực hiện cập nhật
@@ -233,7 +233,6 @@ exports.updateInstruction = async (req, res) => {
                     error: err.message
                 })
             }
-
             
             // Sau khi xóa các file cũ, lưu file mới
             saveNewFile(req, res, filePath, settingService.updateInstruction)

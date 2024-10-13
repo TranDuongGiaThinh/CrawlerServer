@@ -20,6 +20,12 @@ const userTypeRoute = require('./routes/user_type_route.js')
 const packageUserRoute = require('./routes/package_user_route.js')
 const settingRoute = require('./routes/setting_route.js')
 const userRoute = require('./routes/user_route.js')
+const backupRoute = require('./routes/backup_route.js')
+const crawlConfigRoute = require('./routes/crawl_config_route.js')
+const crawlDetailRoute = require('./routes/crawl_detail_route.js')
+const crawlActionDetailRoute = require('./routes/crawl_action_detail_route.js')
+const autoCrawlRoute = require('./routes/auto_crawl_route.js')
+const crawlingRoute = require('./routes/crawling_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -42,7 +48,7 @@ app.use('/crawl-type', crawlTypeRoute)
 app.use('/http-method', httpMethodRoute)
 
 // route loại kết quả trả về khi thu thập
-app.use('/crawl-result-type', crawlResultTypeRoute)
+app.use('/crawl-result-type', crawlResultTypeRoute) 
 
 // route chủ đề thu thập
 app.use('/item-type', itemTypeRoute)
@@ -59,12 +65,30 @@ app.use('/user-type', userTypeRoute)
 // route lịch sử đăng ký gói thành viên
 app.use('/package-user', packageUserRoute)
 
-// route cái đặt setting
+// route cài đặt setting
 app.use('/setting', settingRoute)
 
-// route cái đặt user
+// route user
 app.use('/user', userRoute)
+
+// route backup
+app.use('/backup', backupRoute)
+
+// route cấu hình thu thập
+app.use('/crawl-config', crawlConfigRoute)
+
+// route chi tiết cấu hình thu thập
+app.use('/crawl-detail', crawlDetailRoute)
+
+// route chi tiết hành động thu thập
+app.use('/crawl-action-detail', crawlActionDetailRoute)
+
+// route thu thập tự động
+app.use('/auto-crawl', autoCrawlRoute)
+
+// route thực hiện thu thập
+app.use('/crawling', crawlingRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
-});
+})
