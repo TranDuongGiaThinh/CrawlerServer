@@ -65,7 +65,7 @@ exports.updateItemDetails = async (itemId, newItemDetails) => {
     }
 }
 
-// Lấy danh sách chi tiết item của một item 
+// Lấy chi tiết item chứa url của một item
 exports.getItemDetailContainUrl = async (itemId) => {
     const itemDetail = await ItemDetailMoDel.findOne({
         where: {
@@ -75,4 +75,15 @@ exports.getItemDetailContainUrl = async (itemId) => {
     })
 
     return itemDetail
+}
+
+// Lấy danh sách chi tiết item của một item 
+exports.getAllItemDetailOfItem = async (itemId) => {
+    const itemDetails = await ItemDetailMoDel.findAll({
+        where: {
+            item_id: itemId
+        }
+    })
+
+    return itemDetails
 }

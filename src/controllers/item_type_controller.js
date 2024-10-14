@@ -44,11 +44,9 @@ exports.checkNameExists = async (req, res) => {
         const exists = await userService.checkUserExists(user_id)
 
         if(!exists) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Người dùng không tồn tại!'
             })
-
-            return
         }
 
         // Kiểm tra tên

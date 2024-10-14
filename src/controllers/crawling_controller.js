@@ -162,7 +162,7 @@ const save = async (itemData, itemDetailDatas) => {
     }
 
     // Kiểm tra item đã tồn tại
-    const itemPrimary =  await itemService.getIdItemByUrl(itemData.crawl_config_id, url)
+    const itemPrimary =  await itemService.getItemByUrl(itemData.crawl_config_id, url)
 
     // Nếu đã tồn tại, cập nhật
     if (itemPrimary) {

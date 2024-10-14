@@ -17,7 +17,7 @@ exports.add = async (itemTypeId, websiteId, crawlConfigId) => {
 }
 
 // Lấy id item bằng configId và url (khóa chính)
-exports.getIdItemByUrl = async (configId, url) => {
+exports.getItemByUrl = async (configId, url) => {
     // Lấy danh sách tất cả id trong bảng items
     const items  = await ItemModel.findAll({
         where:{
@@ -37,4 +37,57 @@ exports.getIdItemByUrl = async (configId, url) => {
     }
 
     return null
+}
+
+// Lấy danh sách dữ liệu của một cấu hình thu thập được
+exports.getAllItemOfConfig = async (configId) => {
+    const items = await ItemModel.findAll({
+        where: {
+            crawl_config_id: configId
+        }
+    })
+
+    return items
+}
+
+// Lọc dữ liệu
+exports.filter = async ({ typeId = null, websiteId = null, configId = null }) => {
+    // Tạo điều kiện lọc
+    const whereConditions = {};
+    if (typeId) {
+        whereConditions.item_type_id = typeId;
+    }
+    if (websiteId) {
+        whereConditions.website_id = websiteId;
+    }
+    if (configId) {
+        whereConditions.crawl_config_id = configId;
+    }
+
+    // Lấy danh sách các mục (cần lấy id, crawl_config_id, website_id, item_type_id)
+    const items = await ItemModel.findAll({
+        where: whereConditions
+    })
+
+    return items
+}
+
+// Kiểm tra quyền xuất dữ liệu
+exports.checkPermission = async (req, res) => {
+    
+}
+
+// Xuất dữ liệu
+exports.export = async (req, res) => {
+    
+}
+
+// Lấy danh sách từ khóa gợi ý tìm kiếm
+exports.getSearchSuggestions = async (req, res) => {
+    
+}
+
+// Tìm kiếm dữ liệu thu thập bằng từ khóa
+exports.search = async (req, res) => {
+    
 }

@@ -88,21 +88,6 @@ const ACCOUNT_TYPES = {
     USER_TYPE_NAME: 'Người dùng', 
 }
 
-// Các hằng cho cấu hình "con" khi tạo mới
-// - Các giá trị này chỉ dùng để hiển thị (nếu cần)
-// - Không bao giờ được dùng để kiểm tra logic
-// - Vì các thông tin này đã có ở cấu hình "cha"
-const CHILD_CONFIGS = {
-    // user_id: -1,
-    // name: '',
-    // description: '',
-    // item_type_id: null,
-    // url: '',
-    // website_id: null,
-    // is_complete: false,
-    // update_at: new Date()
-}
-
 // Export các hằng số
 module.exports = {
     HTTP_METHODS,
@@ -113,7 +98,6 @@ module.exports = {
     CRAWL_RESULT_TYPES,
     CRAWL_DATA_TYPES,
     ACCOUNT_TYPES,
-    CHILD_CONFIGS,
     DELIMITER_CHARACTERS,
     SCHEDULE
 }

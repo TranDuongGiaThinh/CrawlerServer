@@ -26,6 +26,7 @@ const crawlDetailRoute = require('./routes/crawl_detail_route.js')
 const crawlActionDetailRoute = require('./routes/crawl_action_detail_route.js')
 const autoCrawlRoute = require('./routes/auto_crawl_route.js')
 const crawlingRoute = require('./routes/crawling_route.js')
+const itemRoute = require('./routes/item_route.js')
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -88,6 +89,9 @@ app.use('/auto-crawl', autoCrawlRoute)
 
 // route thực hiện thu thập
 app.use('/crawling', crawlingRoute)
+
+// route dữ liệu thu thập được
+app.use('/item', itemRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
