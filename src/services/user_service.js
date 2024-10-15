@@ -135,3 +135,11 @@ exports.unlockUser = async (userId) => {
 
     await user.save()
 }
+
+// Tăng số lần xuất file của người dùng
+exports.increaseExportCount = async (userId) => {
+    const user = await UserModel.findByPk(userId)
+
+    user.export_count ++
+    user.save()
+}
