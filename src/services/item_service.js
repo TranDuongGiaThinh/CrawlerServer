@@ -71,23 +71,3 @@ exports.filter = async ({ typeId = null, websiteId = null, configId = null }) =>
 
     return items
 }
-
-// Kiểm tra quyền xuất dữ liệu
-exports.checkPermission = async (req, res) => {
-    
-}
-
-// Xuất dữ liệu
-exports.export = async (req, res) => {
-    
-}
-
-// Lấy danh sách từ khóa gợi ý tìm kiếm
-exports.getSearchSuggestions = async (req, res) => {
-    
-}
-
-// Tìm kiếm dữ liệu thu thập bằng từ khóa
-exports.search = async (req, res) => {
-    
-}

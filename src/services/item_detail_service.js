@@ -1,5 +1,6 @@
 const ItemDetailMoDel = require('../models/item_detail_model')
 const itemService = require('../services/item_service')
+const {Op} = require('sequelize')
 
 // Thêm mới
 exports.add = async (itemId, name, value, isDetailUrl, isPrimaryKey, isConstainKeyword) => {
@@ -83,6 +84,39 @@ exports.getAllItemDetailOfItem = async (itemId) => {
         where: {
             item_id: itemId
         }
+    })
+
+    return itemDetails
+}
+
+// Kiểm tra chi tiết item có chứa từ khóa cần tìm không
+exports.checkIsContainKeyword = async (itemId, keyword) => {
+    const itemDetail = await ItemDetailMoDel.findOne({
+        where: {
+            item_id: itemId,
+            value: {
+                [Op.like]: `%${keyword}%`
+            },
+            is_contain_keywords: true
+        }
+    })
+
+    return itemDetail ? true : false
+}
+
+// Lấy danh sách thuộc tính chứa keyword
+exports.getItemDetailContainKeywordOfItem = async (itemId, keyword) => {
+    const whereCondition = {
+        item_id: itemId,
+        is_contain_keywords: true
+    }
+
+    if (keyword) whereCondition.value = {
+        [Op.like]: `%${keyword}%`
+    }
+
+    const itemDetails = await ItemDetailMoDel.findAll({
+        where: whereCondition
     })
 
     return itemDetails

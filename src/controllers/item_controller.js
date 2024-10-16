@@ -1,12 +1,15 @@
 const {HTTP_STATUS} = require('../untils/constants')
 const itemService = require('../services/item_service')
-const searchSuggestions = require('../services/search_suggestions')
 const crawlConfigService = require('../services/crawl_config_service')
 const itemDetailService = require('../services/item_detail_service')
 const packageUserService = require('../services/package_user_service')
 const userService = require('../services/user_service')
 const websiteService = require('../services/website_service')
 const itemTypeService = require('../services/item_type_service')
+
+// Cache cho gợi ý tìm kiếm của từng người dùng
+const searchSuggestionCache = {}
+
 // Lấy danh sách dữ liệu mà người dùng đã thu thập
 exports.getAllItemOfUser = async (req, res) => {
     try {
@@ -249,9 +252,65 @@ exports.export = async (req, res) => {
 // Lấy danh sách từ khóa gợi ý tìm kiếm
 exports.getSearchSuggestions = async (req, res) => {
     try {
+        const {user_id} = req.params
+        let {keyword} = req.query
+
+        if (!keyword) keyword = null
         
+        let lst = []
+        let searchSuggestion = []
+
+        // Kiểm tra cache trước
+        if (!searchSuggestionCache[user_id] || keyword == null) {
+            // Kiểm tra và xóa các cache quá hạn
+            cleanupCache()
+
+            // tạo cache mới
+            if (!searchSuggestionCache[user_id])
+                await createCache(user_id)
+            else if (searchSuggestionCache[user_id].all_suggestions && keyword == null)
+                lst = searchSuggestionCache[user_id].all_suggestions
+            
+            // Lấy danh sách cấu hình của người dùng
+            const configs = await crawlConfigService.getAllOfUser(user_id)
+
+            // Lấy danh sách item của từng cấu hình
+            const allItem = []
+            for (const config of configs) {
+                const itemOfConfigs = await itemService.getAllItemOfConfig(config.id)
+
+                allItem.push(...itemOfConfigs)
+            }
+
+            // Lấy các giá trị có chứa keyword trong từng item
+            for (const item of allItem) {
+                const itemDetails = await itemDetailService.getItemDetailContainKeywordOfItem(item.id, keyword)
+
+                for (const itemDetail of itemDetails) {
+                    lst.push(itemDetail.value)
+                }
+            }
+        } else {
+            let preKeyword = null
+            for (const key of Object.keys(searchSuggestionCache[user_id])) {
+                if (keyword.includes(key)) {
+                    if (!preKeyword || key.length > preKeyword.length) {
+                        preKeyword = key
+                        lst = searchSuggestionCache[user_id][key]
+                    }
+                }
+            }
+
+            if (lst.length == 0 && searchSuggestionCache[user_id].all_suggestions)
+                lst = searchSuggestionCache[user_id].all_suggestions
+        }
+
+        // Tạo danh sách gợi ý
+        searchSuggestion = keyword == null ? lst : await createSuggestion(lst, keyword)
+        saveCache(user_id, keyword, lst)
+
         res.status(HTTP_STATUS.OK).json({
-            items: [],
+            search_suggestions: searchSuggestion,
             message: 'Lấy danh sách từ khóa gợi ý tìm kiếm thành công!',
         })
     } catch (error) {
@@ -265,9 +324,34 @@ exports.getSearchSuggestions = async (req, res) => {
 // Tìm kiếm dữ liệu thu thập bằng từ khóa
 exports.search = async (req, res) => {
     try {
+        const {user_id, keyword} = req.params
+
+        // Lấy danh sách cấu hình của người dùng
+        const configs = await crawlConfigService.getAllOfUser(user_id)
+
+        // Lấy danh sách item của từng cấu hình
+        const allItem = []
+        for (const config of configs) {
+            const itemOfConfigs = await itemService.getAllItemOfConfig(config.id)
+
+            allItem.push(...itemOfConfigs)
+        }
+
+        // Kiểm tra từng item có chứa từ khóa cần tìm không
+        const items = []
+        for (const item of allItem) {
+            // Nếu có, lưu lại id item đó
+            const checkResult = await itemDetailService.checkIsContainKeyword(item.id, keyword)
+            if (checkResult) {
+                // Lấy danh sách chi tiết item
+                const itemDetails = await itemDetailService.getAllItemDetailOfItem(item.id)
+
+                items.push({item: item, item_details: itemDetails})
+            }
+        }
         
         res.status(HTTP_STATUS.OK).json({
-            items: [],
+            items: items,
             message: 'Tìm kiếm dữ liệu thu thập bằng từ khóa thành công!',
         })
     } catch (error) {
@@ -276,4 +360,80 @@ exports.search = async (req, res) => {
             error: error.message
         })
     }
+}
+
+// Rút gọn gợi ý từ 1 thuộc tính (vd: tên sản phẩm) thành 1 từ, cụm từ khóa
+const createSuggestion = async (lst, keyword) => {
+    const combinationCounts = new Map()
+
+    lst.forEach(value => {
+        const words = value.split(' ').map(word => word.toLowerCase())
+        const combinations = new Set()
+
+        for (let start = 0; start < words.length; start++) {
+            if (!words[start].includes(keyword) && !keyword.includes(words[start])) continue
+
+            let combination = ''
+            for (let end = start; end < words.length; end++) {
+                combination = combination ? `${combination} ${words[end]}` : words[end]
+                combinations.add(combination)
+            }
+        }
+
+        combinations.forEach(combination => {
+            combinationCounts.set(combination, (combinationCounts.get(combination) || 0) + 1)
+        })
+    })
+    
+    // Lấy gợi ý phù hợp và lưu vào cache
+    const suggestions = getTopSuggestions(combinationCounts, keyword)
+
+    return suggestions
+
+}
+
+// Hàm lấy ra các gợi ý phù hợp
+const getTopSuggestions = (combinationCounts, keyword) => {
+    const sortedCombinations = Array.from(combinationCounts.entries())
+        .filter(([combination]) => {
+            return keyword ? combination.includes(keyword.toLowerCase()) : true
+        })
+        .sort(([, countA], [, countB]) => countB - countA)
+        .map(([combination]) => combination)
+
+    return sortedCombinations
+}
+
+// Hàm tạo cache cho từng user
+const createCache = async (userId) => {
+    searchSuggestionCache[userId] = {}
+}
+
+// Hàm lưu lại cache tìm kiếm
+const saveCache = async (userId, keyword, lst) => {
+    if (keyword == null) {
+        searchSuggestionCache[userId].all_suggestions = lst
+    } else {
+        searchSuggestionCache[userId][keyword] = lst
+    }
+    
+    // Lấy thời gian hiện tại + 30 phút
+    const now = new Date();
+    searchSuggestionCache[userId].expire_at = new Date(now.getTime() + 60 * 60 * 1000)
+}
+
+// Hàm xóa cache tìm kiếm
+const cleanupCache = async () => {
+    const now = new Date();
+    const userIds = Object.keys(searchSuggestionCache);
+
+    userIds.forEach(userId => {
+        const userCache = searchSuggestionCache[userId]
+        
+        // Kiểm tra thời gian hết hạn
+        if (userCache && userCache.expire_at && userCache.expire_at < now) {
+            // Xóa nếu hết hạn
+            delete searchSuggestionCache[userId]
+        }
+    })
 }

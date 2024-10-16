@@ -16,9 +16,9 @@ route.get('/check-export-permission/:user_id', controller.checkExportPermission)
 route.get('/export/:user_id', controller.export)
 
 // Lấy danh sách từ khóa gợi ý tìm kiếm dữ liệu thu thập
-route.get('/get-search-suggestions/:keyword', controller.getSearchSuggestions)
+route.get('/get-search-suggestions/:user_id', controller.getSearchSuggestions)
 
 // Tìm kiếm dữ liệu thu thập bằng từ khóa
-route.get('/search', controller.search)
+route.get('/search/:user_id/:keyword', controller.search)
 
 module.exports = route
