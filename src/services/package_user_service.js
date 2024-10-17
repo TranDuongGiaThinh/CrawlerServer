@@ -56,3 +56,13 @@ exports.add = async (userId, userType, renewalPackage, days, totalPrice, maxAuto
 
     return newPackageUser
 }
+
+// Kiểm tra quyền xuất dữ liệu của người dùng của người dùng
+exports.checkExportPermission = async (userId) => {
+    const packgeIsUsing = await this.getPackageIsUsing(userId)
+
+    const user = await UserModel.findByPk(userId)
+
+    if (!packgeIsUsing) return false
+    return packgeIsUsing.max_export - user.export_count > 0
+}

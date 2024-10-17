@@ -78,7 +78,7 @@ exports.checkLogin = async (req, res) => {
         // Thực hiện đăng nhập
         const user = await userService.checkLogin(username, password)
         if (!user) {
-            res.status(HTTP_STATUS.OK).json({
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thông tin đăng nhập sai!'
             })
         }

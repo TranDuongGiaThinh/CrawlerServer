@@ -5,6 +5,8 @@ const userService = require('../services/user_service')
 // Lấy danh sách cấu hình của người dùng
 exports.getAllConfigOfUser = async (req, res) => {
     try {
+        const {user_id} = req.params
+        
         // Kiểm tra người dùng có tồn tại
         const checkResult = await userService.checkUserExists(user_id)
         if (!checkResult) {
@@ -23,7 +25,7 @@ exports.getAllConfigOfUser = async (req, res) => {
     } catch (error) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi thực hiện lấy danh sách cấu hình của người dùng!',
-            error: error
+            error: error.message
         })
     }
 }
