@@ -1,5 +1,6 @@
 const {HTTP_STATUS} = require('../untils/constants')
 const userService = require('../services/user_service')
+const accountTypeService = require('../services/account_type_service')
 
 // Đăng ký tài khoản người dùng
 exports.register = async (req, res) => {
@@ -83,8 +84,20 @@ exports.checkLogin = async (req, res) => {
             })
         }
         else {
+            const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+
+            const userClone = { 
+                id: user.id,
+                username: user.username,
+                fullname: user.fullname,
+                email: user.email,
+                phone: user.phone,
+                locked: user.locked,
+                is_admin: isAdmin 
+            }
+
             res.status(HTTP_STATUS.OK).json({
-                user: user,
+                user: userClone,
                 message: 'Đăng nhập thành công!'
             })
         }
@@ -119,8 +132,24 @@ exports.getUser = async (req, res) => {
         // Thực hiện lấy thông tin của người dùng
         const user = await userService.getUser(id)
 
+        if (user) {
+            const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+
+            user.is_admin = isAdmin
+        }
+
+        const userClone = { 
+            id: user.id,
+            username: user.username,
+            fullname: user.fullname,
+            email: user.email,
+            phone: user.phone,
+            locked: user.locked,
+            is_admin: isAdmin 
+        }
+
         res.status(HTTP_STATUS.OK).json({
-            user: user,
+            user: userClone,
             message: 'Lấy thông tin người dùng thành công!'
         })
     } catch (e) {
