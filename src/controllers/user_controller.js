@@ -23,10 +23,22 @@ exports.register = async (req, res) => {
         }
 
         // Thực hiện thêm
-        const newUser = await userService.add(username, password, fullname, email, phone)
+        const user = await userService.add(username, password, fullname, email, phone)
 
-        res.status(HTTP_STATUS.OK).json({
-            user: newUser,
+        const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+
+        const userClone = { 
+            id: user.id,
+            username: user.username,
+            fullname: user.fullname,
+            email: user.email,
+            phone: user.phone,
+            locked: user.locked,
+            is_admin: isAdmin 
+        }
+        
+        res.status(HTTP_STATUS.CREATED).json({
+            user: userClone,
             message: 'Đăng ký tài khoản người dùng thành công!'
         })
     } catch (e) {
