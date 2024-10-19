@@ -98,7 +98,7 @@ exports.add = async (req, res) => {
             user_id, user_type, renewal_package, days, total_price, max_auto_config, max_config, max_export
         )
 
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             package_user: newPackageUser,
             message: 'Thêm lịch sử đăng ký gói thành viên của người dùng thành công!'
         })
