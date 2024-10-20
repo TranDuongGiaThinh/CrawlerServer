@@ -33,7 +33,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm mới
         const newActionDetail = await crawlActionDetailService.add(crawl_config_id, sort_index, action_type_id, selector, value, is_list)
         
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             crawl_action_detail: newActionDetail,
             message: 'Thêm mới chi tiết hành động thành công!'
         })

@@ -87,7 +87,7 @@ exports.createBackup = async (req, res) => {
         res.setHeader('Content-Disposition', `attachment; filename=backup.enc`)
         res.setHeader('Content-Type', 'application/octet-stream')
 
-        res.status(HTTP_STATUS.OK).send(encData)
+        res.status(HTTP_STATUS.CREATED).send(encData)
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ 
             message: 'Lỗi khi tạo bản sao lưu!',
