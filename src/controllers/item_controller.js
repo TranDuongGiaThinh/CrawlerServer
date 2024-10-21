@@ -187,7 +187,7 @@ exports.export = async (req, res) => {
             }
         } else {
             // Lọc
-            lstItem = await itemService.filter({ typeId, websiteId, configId })
+            lstItem.push(...await itemService.filter({ typeId, websiteId, configId }))
         }        
     
         // Lấy thông tin chi tiết của từng item
