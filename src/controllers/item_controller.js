@@ -256,6 +256,7 @@ exports.getSearchSuggestions = async (req, res) => {
         let {keyword} = req.query
 
         if (!keyword) keyword = null
+        else if (keyword == '') keyword == null
         
         let lst = []
         let searchSuggestion = []

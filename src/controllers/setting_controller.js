@@ -55,9 +55,7 @@ exports.downloadApp = async (req, res) => {
 
         // Đọc và gửi nội dung tệp về phía client
         const fileStream = fs.createReadStream(filePath)
-        fileStream.pipe(res)
-
-        res.status(HTTP_STATUS.OK).json({message: 'Tải xuống thành công!'})        
+        fileStream.pipe(res)     
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi tải xuống ứng dụng!',
@@ -81,8 +79,6 @@ exports.downloadInstruction = async (req, res) => {
         // Đọc và gửi nội dung tệp về phía client
         const fileStream = fs.createReadStream(filePath)
         fileStream.pipe(res)
-
-        res.status(HTTP_STATUS.OK).json({message: 'Tải xuống thành công!'})
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi tải xuống hướng dẫn sử dụng!',
