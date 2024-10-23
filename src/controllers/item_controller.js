@@ -325,7 +325,8 @@ exports.getSearchSuggestions = async (req, res) => {
 // Tìm kiếm dữ liệu thu thập bằng từ khóa
 exports.search = async (req, res) => {
     try {
-        const {user_id, keyword} = req.params
+        const {user_id} = req.params
+        const {keyword} = req.body
 
         // Lấy danh sách cấu hình của người dùng
         const configs = await crawlConfigService.getAllOfUser(user_id)
@@ -377,7 +378,7 @@ const createSuggestion = async (lst, keyword) => {
             let combination = ''
             for (let end = start; end < words.length; end++) {
                 if (keyword.split(' ').length + 1 < end - start) {
-                    combinations.add(value)
+                    combinations.add(value.toLowerCase())
                     break
                 }
                 else {
