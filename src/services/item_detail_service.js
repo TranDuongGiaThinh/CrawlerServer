@@ -1,6 +1,6 @@
 const ItemDetailMoDel = require('../models/item_detail_model')
 const itemService = require('../services/item_service')
-const {Op} = require('sequelize')
+const {Op, literal} = require('sequelize')
 
 // Thêm mới
 exports.add = async (itemId, name, value, isDetailUrl, isPrimaryKey, isConstainKeyword) => {
@@ -94,10 +94,8 @@ exports.checkIsContainKeyword = async (itemId, keyword) => {
     const itemDetail = await ItemDetailMoDel.findOne({
         where: {
             item_id: itemId,
-            value: {
-                [Op.like]: `%${keyword}%`
-            },
-            is_contain_keywords: true
+            is_contain_keywords: true,
+            [Op.and]: literal(`LOWER(value) LIKE LOWER('%${keyword}%')`)
         }
     })
 

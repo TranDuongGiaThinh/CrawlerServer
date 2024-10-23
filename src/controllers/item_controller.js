@@ -376,8 +376,14 @@ const createSuggestion = async (lst, keyword) => {
 
             let combination = ''
             for (let end = start; end < words.length; end++) {
-                combination = combination ? `${combination} ${words[end]}` : words[end]
-                combinations.add(combination)
+                if (keyword.split(' ').length + 1 < end - start) {
+                    combinations.add(value)
+                    break
+                }
+                else {
+                    combination = combination ? `${combination} ${words[end]}` : words[end]
+                    combinations.add(combination)
+                }
             }
         }
 
