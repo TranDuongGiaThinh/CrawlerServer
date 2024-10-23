@@ -35,6 +35,23 @@ exports.checkPermission = async (userId) => {
     return packageUser.max_auto_config - autoConfigCount > 0
 }
 
+// Đếm cấu hình thu thập tự động
+exports.countAutoCrawlConfig = async (userId) => {
+    // Lấy danh sách cấu hình thu thập tự động của người dùng
+    const configsOfUser = await CrawlConfigModel.findAll({
+        where: {user_id: userId}
+    })
+
+    let autoConfigCount = 0
+    for (const config of configsOfUser) {
+        const checkAutoCrawl = await this.checkAutoCrawlExistsByConfigId(config.id);
+        if (checkAutoCrawl) autoConfigCount++;
+    }
+
+    // Trả về kết quả kiểm tra
+    return autoConfigCount
+}
+
 // Thêm cấu hình thu thập tự động
 exports.add = async (userId, configId, crawlTime) => {
     // Tính ngày hết hạn

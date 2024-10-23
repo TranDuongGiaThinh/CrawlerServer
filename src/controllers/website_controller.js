@@ -107,7 +107,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm website
         const newWebsite = await websiteService.add(name, shortenedUrl, user_id)
 
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             website: newWebsite,
             message: 'Thêm mới website thành công!'
         })

@@ -127,7 +127,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm
         const newItemType = await itemTypeService.add(type, description, user_id)
 
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             item_type: newItemType,
             message: 'Thêm chủ đề thu thập thành công!'
         })

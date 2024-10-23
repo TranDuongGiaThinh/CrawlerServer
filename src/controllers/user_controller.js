@@ -1,5 +1,7 @@
 const {HTTP_STATUS} = require('../untils/constants')
 const userService = require('../services/user_service')
+const accountTypeService = require('../services/account_type_service')
+const autoCrawlService = require('../services/auto_crawl_service')
 
 // Đăng ký tài khoản người dùng
 exports.register = async (req, res) => {
@@ -22,10 +24,22 @@ exports.register = async (req, res) => {
         }
 
         // Thực hiện thêm
-        const newUser = await userService.add(username, password, fullname, email, phone)
+        const user = await userService.add(username, password, fullname, email, phone)
 
-        res.status(HTTP_STATUS.OK).json({
-            user: newUser,
+        const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+
+        const userClone = { 
+            id: user.id,
+            username: user.username,
+            fullname: user.fullname,
+            email: user.email,
+            phone: user.phone,
+            locked: user.locked,
+            is_admin: isAdmin 
+        }
+        
+        res.status(HTTP_STATUS.CREATED).json({
+            user: userClone,
             message: 'Đăng ký tài khoản người dùng thành công!'
         })
     } catch (e) {
@@ -83,8 +97,24 @@ exports.checkLogin = async (req, res) => {
             })
         }
         else {
+            const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+            const autoCrawlConfigCountOfUser = await autoCrawlService.countAutoCrawlConfig(user.id)
+
+            const userClone = { 
+                id: user.id,
+                username: user.username,
+                fullname: user.fullname,
+                email: user.email,
+                phone: user.phone,
+                locked: user.locked,
+                is_admin: isAdmin,
+                export_count: user.export_count,
+                config_count: user.config_count,
+                auto_config_count: autoCrawlConfigCountOfUser
+            }
+
             res.status(HTTP_STATUS.OK).json({
-                user: user,
+                user: userClone,
                 message: 'Đăng nhập thành công!'
             })
         }
@@ -119,10 +149,28 @@ exports.getUser = async (req, res) => {
         // Thực hiện lấy thông tin của người dùng
         const user = await userService.getUser(id)
 
-        res.status(HTTP_STATUS.OK).json({
-            user: user,
-            message: 'Lấy thông tin người dùng thành công!'
-        })
+        if (user) {
+            const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+            const autoCrawlConfigCountOfUser = await autoCrawlService.countAutoCrawlConfig(user.id)
+
+            const userClone = { 
+                id: user.id,
+                username: user.username,
+                fullname: user.fullname,
+                email: user.email,
+                phone: user.phone,
+                locked: user.locked,
+                is_admin: isAdmin,
+                export_count: user.export_count,
+                config_count: user.config_count,
+                auto_config_count: autoCrawlConfigCountOfUser
+            }
+
+            res.status(HTTP_STATUS.OK).json({
+                user: userClone,
+                message: 'Lấy thông tin người dùng thành công!'
+            })
+        }
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi lấy thông tin người dùng!',

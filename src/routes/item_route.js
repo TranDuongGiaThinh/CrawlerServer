@@ -19,6 +19,6 @@ route.get('/export/:user_id', controller.export)
 route.get('/get-search-suggestions/:user_id', controller.getSearchSuggestions)
 
 // Tìm kiếm dữ liệu thu thập bằng từ khóa
-route.get('/search/:user_id/:keyword', controller.search)
+route.post('/search/:user_id', controller.search)
 
 module.exports = route

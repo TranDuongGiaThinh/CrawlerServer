@@ -187,7 +187,7 @@ exports.export = async (req, res) => {
             }
         } else {
             // Lọc
-            lstItem = await itemService.filter({ typeId, websiteId, configId })
+            lstItem.push(...await itemService.filter({ typeId, websiteId, configId }))
         }        
     
         // Lấy thông tin chi tiết của từng item
@@ -256,6 +256,7 @@ exports.getSearchSuggestions = async (req, res) => {
         let {keyword} = req.query
 
         if (!keyword) keyword = null
+        else if (keyword == '') keyword == null
         
         let lst = []
         let searchSuggestion = []
@@ -324,7 +325,8 @@ exports.getSearchSuggestions = async (req, res) => {
 // Tìm kiếm dữ liệu thu thập bằng từ khóa
 exports.search = async (req, res) => {
     try {
-        const {user_id, keyword} = req.params
+        const {user_id} = req.params
+        const {keyword} = req.body
 
         // Lấy danh sách cấu hình của người dùng
         const configs = await crawlConfigService.getAllOfUser(user_id)
@@ -375,8 +377,14 @@ const createSuggestion = async (lst, keyword) => {
 
             let combination = ''
             for (let end = start; end < words.length; end++) {
-                combination = combination ? `${combination} ${words[end]}` : words[end]
-                combinations.add(combination)
+                if (keyword.split(' ').length + 1 < end - start) {
+                    combinations.add(value.toLowerCase())
+                    break
+                }
+                else {
+                    combination = combination ? `${combination} ${words[end]}` : words[end]
+                    combinations.add(combination)
+                }
             }
         }
 

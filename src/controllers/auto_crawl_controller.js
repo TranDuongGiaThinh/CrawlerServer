@@ -70,7 +70,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm
         const newAutoCrawl = await autoCrawlService.add(user_id, crawl_config_id, crawl_time)
         
-        res.status(HTTP_STATUS.OK).json({ 
+        res.status(HTTP_STATUS.CREATED).json({ 
             auto_crawl: newAutoCrawl,
             message: 'Tạo cấu hình thu thập tự động thành công!'
         })

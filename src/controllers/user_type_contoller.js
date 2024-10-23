@@ -81,7 +81,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm
         const newUserType = await userTypeService.add(type, description, max_auto_config, max_config, max_export, price)
 
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             user_type: newUserType,
             message: 'Thêm gói thành viên thành công!'
         })

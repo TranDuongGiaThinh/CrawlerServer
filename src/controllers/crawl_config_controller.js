@@ -160,7 +160,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm
         const newConfig = await crawlConfigService.add(user_id, name, description, url, website_id, crawl_type_id)
         
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             config: newConfig,
             message: 'Tạo cấu hình thành công!'
         })

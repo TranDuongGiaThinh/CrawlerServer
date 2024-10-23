@@ -47,7 +47,7 @@ exports.add = async (req, res) => {
             crawl_config_id, sort_index, data_type_id, name, selector, attribute, is_primary_key, is_detail_url, is_contain_keywords
         )
         
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             crawl_detail: newDetail,
             message: 'Thêm mới chi tiết cấu hình thành công!'
         })

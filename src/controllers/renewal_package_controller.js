@@ -95,7 +95,7 @@ exports.add = async (req, res) => {
         // Thực hiện thêm
         const newRenewalPackage = await renewalPackageService.add(type, description, promotion, days)
 
-        res.status(HTTP_STATUS.OK).json({
+        res.status(HTTP_STATUS.CREATED).json({
             renewal_packages: newRenewalPackage,
             message: 'Thêm gói gia hạn thành công!'
         })
