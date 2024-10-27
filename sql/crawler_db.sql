@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 06:01 PM
+-- Generation Time: Oct 27, 2024 at 04:11 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -144,7 +144,7 @@ INSERT INTO `crawl_configs` (`id`, `parent_id`, `user_id`, `name`, `description`
 (6, NULL, 2, 'Thu thập danh sách điện thoại của CellphoneS dựa trên HTML', 'Mô tả, ghi chú', 'https://cellphones.com.vn/mobile.html', 1, 1, 1, 2, '.product-info-container.product-item', NULL, NULL, NULL, 1, '2024-10-08'),
 (7, NULL, 2, 'Lấy chi tiết sản phẩm Tiki bằng API', 'mô tả', 'https://tiki.vn/api/v2/products/184036446?platform=web&spid=32033721&version=3', 2, 2, 1, 1, NULL, 1, NULL, NULL, 1, '2024-10-10'),
 (9, NULL, 2, 'Lấy danh sách sản phẩm Tiki bằng API', 'mô tả', 'https://tiki.vn/api/personalish/v1/blocks/listings?limit=40&include=advertisement&aggregations=2&version=home-persionalized&trackity_id=de9c7848-5276-89fb-a8cb-fd07fbc0b86b&category=1795&page=1&urlKey=dien-thoai-smartphone', 2, 1, 1, 1, 'data', 1, NULL, NULL, 1, '2024-10-10'),
-(10, NULL, 2, 'lấy danh sách tin tức của TuoiTre bằng rss', 'mô tả', 'https://tuoitre.vn/rss/thoi-su.rss', 3, 1, 13, 3, 'rss.channel.item', NULL, NULL, NULL, 1, '2024-10-10');
+(10, NULL, 2, 'lấy danh sách tin tức của TuoiTre bằng rss', 'mô tả', 'https://tuoitre.vn/rss/thoi-su.rss', 3, 1, 5, 3, 'rss.channel.item', NULL, NULL, NULL, 1, '2024-10-10');
 
 -- --------------------------------------------------------
 
@@ -299,36 +299,6 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `crawl_config_id`, `item_type_id`, `website_id`, `update_at`) VALUES
-(64, 10, 13, 3, '2024-10-12'),
-(65, 10, 13, 3, '2024-10-12'),
-(66, 10, 13, 3, '2024-10-12'),
-(67, 10, 13, 3, '2024-10-12'),
-(68, 10, 13, 3, '2024-10-12'),
-(69, 10, 13, 3, '2024-10-12'),
-(70, 10, 13, 3, '2024-10-12'),
-(71, 10, 13, 3, '2024-10-12'),
-(72, 10, 13, 3, '2024-10-12'),
-(73, 10, 13, 3, '2024-10-12'),
-(74, 10, 13, 3, '2024-10-12'),
-(75, 10, 13, 3, '2024-10-12'),
-(76, 10, 13, 3, '2024-10-12'),
-(77, 10, 13, 3, '2024-10-12'),
-(78, 10, 13, 3, '2024-10-12'),
-(79, 10, 13, 3, '2024-10-12'),
-(80, 10, 13, 3, '2024-10-12'),
-(81, 10, 13, 3, '2024-10-12'),
-(82, 10, 13, 3, '2024-10-12'),
-(83, 10, 13, 3, '2024-10-12'),
-(84, 10, 13, 3, '2024-10-12'),
-(85, 10, 13, 3, '2024-10-12'),
-(86, 10, 13, 3, '2024-10-12'),
-(87, 10, 13, 3, '2024-10-12'),
-(88, 10, 13, 3, '2024-10-12'),
-(89, 10, 13, 3, '2024-10-12'),
-(90, 10, 13, 3, '2024-10-12'),
-(91, 10, 13, 3, '2024-10-12'),
-(92, 10, 13, 3, '2024-10-12'),
-(93, 10, 13, 3, '2024-10-12'),
 (94, 9, 1, 1, '2024-10-12'),
 (95, 9, 1, 1, '2024-10-12'),
 (96, 9, 1, 1, '2024-10-12'),
@@ -1301,10 +1271,37 @@ INSERT INTO `items` (`id`, `crawl_config_id`, `item_type_id`, `website_id`, `upd
 (1063, 6, 1, 2, '2024-10-12'),
 (1064, 6, 1, 2, '2024-10-12'),
 (1065, 6, 1, 2, '2024-10-12'),
-(1066, 5, 1, 2, '2024-10-12'),
-(1067, 5, 1, 2, '2024-10-12'),
-(1068, 5, 1, 2, '2024-10-12'),
-(1069, 5, 1, 2, '2024-10-12');
+(1070, 5, 1, 2, '2024-10-15'),
+(1071, 10, 5, 3, '2024-10-15'),
+(1072, 10, 5, 3, '2024-10-15'),
+(1073, 10, 5, 3, '2024-10-15'),
+(1074, 10, 5, 3, '2024-10-15'),
+(1075, 10, 5, 3, '2024-10-15'),
+(1076, 10, 5, 3, '2024-10-15'),
+(1077, 10, 5, 3, '2024-10-15'),
+(1078, 10, 5, 3, '2024-10-15'),
+(1079, 10, 5, 3, '2024-10-15'),
+(1080, 10, 5, 3, '2024-10-15'),
+(1081, 10, 5, 3, '2024-10-15'),
+(1082, 10, 5, 3, '2024-10-15'),
+(1083, 10, 5, 3, '2024-10-15'),
+(1084, 10, 5, 3, '2024-10-15'),
+(1085, 10, 5, 3, '2024-10-15'),
+(1086, 10, 5, 3, '2024-10-15'),
+(1087, 10, 5, 3, '2024-10-15'),
+(1088, 10, 5, 3, '2024-10-15'),
+(1089, 10, 5, 3, '2024-10-15'),
+(1090, 10, 5, 3, '2024-10-15'),
+(1091, 10, 5, 3, '2024-10-15'),
+(1092, 10, 5, 3, '2024-10-15'),
+(1093, 10, 5, 3, '2024-10-15'),
+(1094, 10, 5, 3, '2024-10-15'),
+(1095, 10, 5, 3, '2024-10-15'),
+(1096, 10, 5, 3, '2024-10-15'),
+(1097, 10, 5, 3, '2024-10-15'),
+(1098, 10, 5, 3, '2024-10-15'),
+(1099, 10, 5, 3, '2024-10-15'),
+(1100, 10, 5, 3, '2024-10-15');
 
 -- --------------------------------------------------------
 
@@ -4392,7 +4389,100 @@ INSERT INTO `item_details` (`id`, `item_id`, `name`, `value`, `is_primary_key`, 
 (3240, 1068, 'Tên sản phẩm', ' iPhone 13 128GB | Chính hãng VN/A ', 0, 0, 1),
 (3241, 1068, 'Giá', '13.890.000đ', 0, 0, 0),
 (3242, 1069, 'Tên sản phẩm', ' iPhone 13 128GB | Chính hãng VN/A ', 0, 0, 1),
-(3243, 1069, 'Giá', '13.890.000đ', 0, 0, 0);
+(3243, 1069, 'Giá', '13.890.000đ', 0, 0, 0),
+(3244, 1070, 'Tên sản phẩm', ' iPhone 13 128GB | Chính hãng VN/A ', 0, 0, 1),
+(3245, 1070, 'Giá', '13.790.000đ', 0, 0, 0),
+(3246, 1071, 'Link trang chi tiết', 'https://tuoitre.vn/ra-ngan-hang-rut-107-trieu-dong-roi-bo-nham-vao-cop-xe-nguoi-khac-20241015090701384.htm', 1, 1, 0),
+(3247, 1071, 'Tiêu đề tin tức', 'Ra ngân hàng rút 107,9 triệu đồng rồi bỏ nhầm vào cốp xe người khác', 0, 0, 1),
+(3248, 1071, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/ra-ngan-hang-rut-107-trieu-dong-roi-bo-nham-vao-cop-xe-nguoi-khac-20241015090701384.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/14-10-tra-tien-lac-07-1728957483110251652455-43-0-1056-1620-crop-17289577917571199684817.jpg\" /></a>Người đàn ông vào ngân hàng rút 107,9 triệu đồng rồi bỏ nhầm vào cốp xe của người khác, đến lúc về nhà phát hiện mất tiền mới hốt hoảng đi tìm.', 0, 0, 0),
+(3249, 1072, 'Link trang chi tiết', 'https://tuoitre.vn/nhieu-hoat-dong-y-nghia-huong-toi-ky-niem-110-nam-ngay-sinh-anh-hung-ly-tu-trong-20241015084949447.htm', 1, 1, 0),
+(3250, 1072, 'Tiêu đề tin tức', 'Nhiều hoạt động ý nghĩa hướng tới kỷ niệm 110 năm Ngày sinh anh hùng Lý Tự Trọng', 0, 0, 1),
+(3251, 1072, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/nhieu-hoat-dong-y-nghia-huong-toi-ky-niem-110-nam-ngay-sinh-anh-hung-ly-tu-trong-20241015084949447.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/z59308901021103ba645d1933b48ffe527b37f913e4ec4-17289563682291329140231-130-0-1380-2000-crop-17289567386011296652929.jpg\" /></a>Tuổi trẻ Hà Tĩnh có nhiều đợt sinh hoạt chính trị \"Sáng mãi con đường cách mạng của thanh niên\", nhằm hướng tới kỷ niệm 110 năm Ngày sinh anh hùng liệt sĩ Lý Tự Trọng.', 0, 0, 0),
+(3252, 1073, 'Link trang chi tiết', 'https://tuoitre.vn/10-vi-tri-dat-cong-tai-tp-hcm-duoc-de-xuat-lam-bai-xe-cong-cong-2024101118485496.htm', 1, 1, 0),
+(3253, 1073, 'Tiêu đề tin tức', '10 vị trí đất công tại TP.HCM được đề xuất làm bãi xe công cộng', 0, 0, 1),
+(3254, 1073, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/10-vi-tri-dat-cong-tai-tp-hcm-duoc-de-xuat-lam-bai-xe-cong-cong-2024101118485496.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/dscf2108-17286438723011077187470-0-0-1250-2000-crop-17289585234121862761486.jpg\" /></a>Sở Xây dựng TP.HCM đã tổng hợp đề xuất của các đơn vị về 10 vị trí đất công tại TP.HCM để cấp phép xây dựng có thời hạn làm bãi xe.', 0, 0, 0),
+(3255, 1074, 'Link trang chi tiết', 'https://tuoitre.vn/dong-nai-quy-dinh-han-muc-ca-nhan-nhan-chuyen-nhuong-dat-nong-nghiep-khong-qua-45-ha-20241015063154286.htm', 1, 1, 0),
+(3256, 1074, 'Tiêu đề tin tức', 'Đồng Nai quy định hạn mức cá nhân nhận chuyển nhượng đất nông nghiệp không quá 45ha', 0, 0, 1),
+(3257, 1074, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/dong-nai-quy-dinh-han-muc-ca-nhan-nhan-chuyen-nhuong-dat-nong-nghiep-khong-qua-45-ha-20241015063154286.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/dat-dai-dong-nai-17289586321232130290049.jpg\" /></a>Tỉnh Đồng Nai vừa ban hành quy định hạn mức tối đa nhận chuyển nhượng đất nông nghiệp của cá nhân không quá 45ha.', 0, 0, 0),
+(3258, 1075, 'Link trang chi tiết', 'https://tuoitre.vn/de-xuat-giu-lai-phan-thu-ngan-sach-vuot-ke-hoach-de-lam-metro-20241015075015052.htm', 1, 1, 0),
+(3259, 1075, 'Tiêu đề tin tức', 'Đề xuất giữ lại phần thu ngân sách vượt kế hoạch để làm metro', 0, 0, 1),
+(3260, 1075, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/de-xuat-giu-lai-phan-thu-ngan-sach-vuot-ke-hoach-de-lam-metro-20241015075015052.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/nha-ga-metro-so-1-35-17144533792031855931873-310-0-1370-1696-crop-172895444686081996343.jpg\" /></a>TP.HCM đề xuất giữ lại số thu ngân sách vượt dự toán đối với phần thu chia sẻ giữa Trung ương và địa phương giai đoạn 2026 - 2030 để làm đường sắt đô thị.', 0, 0, 0),
+(3261, 1076, 'Link trang chi tiết', 'https://tuoitre.vn/tin-tuc-sang-15-10-de-xuat-giam-15-30-tien-thue-dat-2024-202410142029484.htm', 1, 1, 0),
+(3262, 1076, 'Tiêu đề tin tức', 'Tin tức sáng 15-10: Đề xuất giảm 15-30% tiền thuê đất năm 2024', 0, 0, 1),
+(3263, 1076, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/tin-tuc-sang-15-10-de-xuat-giam-15-30-tien-thue-dat-2024-202410142029484.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/11-10-kiem-tra-tien-thue-dat-06-1697004813696652737698-83-0-1333-2000-crop-17289207534721278025347.jpg\" /></a>Tin tức đáng chú ý: Đề xuất mới về giảm tiền thuê đất năm 2024; TP.HCM bãi bỏ quy định không xét duyệt đi nước ngoài với cán bộ đang bị kỷ luật khiển trách trở lên; Mỗi năm thế giới có khoảng 19 - 23 triệu tấn nhựa thải ra sông, biển...', 0, 0, 0),
+(3264, 1077, 'Link trang chi tiết', 'https://tuoitre.vn/thoi-tiet-hom-nay-15-10-mua-to-o-nhieu-noi-tren-ca-nuoc-20241014160240785.htm', 1, 1, 0),
+(3265, 1077, 'Tiêu đề tin tức', 'Thời tiết hôm nay 15-10: Mưa to ở nhiều nơi trên cả nước', 0, 0, 1),
+(3266, 1077, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/thoi-tiet-hom-nay-15-10-mua-to-o-nhieu-noi-tren-ca-nuoc-20241014160240785.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/thoi-tiet-15-10-1728896363494795290433-89-0-1206-1787-crop-17288964562941129350884.jpg\" /></a>Hôm nay 15-10, mưa có xu hướng tăng, thời tiết cả nước nhiều nơi mưa to.', 0, 0, 0),
+(3267, 1078, 'Link trang chi tiết', 'https://tuoitre.vn/chu-tich-quoc-hoi-chu-trong-huong-dan-nong-dan-ung-dung-cong-nghe-so-20241014191021758.htm', 1, 1, 0),
+(3268, 1078, 'Tiêu đề tin tức', 'Chủ tịch Quốc hội: Chú trọng hướng dẫn nông dân ứng dụng công nghệ số', 0, 0, 1),
+(3269, 1078, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/chu-tich-quoc-hoi-chu-trong-huong-dan-nong-dan-ung-dung-cong-nghe-so-20241014191021758.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/chu-tich-quoc-hoi-2-17289186090241683230158-50-0-1300-2000-crop-1728918619989277380456-79-181-1111-1832-crop-17289571960891942913165.jpg\" /></a>Chủ tịch Quốc hội Trần Thanh Mẫn mong muốn Hội Nông dân các cấp cần chú trọng hướng dẫn hội viên, nông dân ứng dụng công nghệ số, xây dựng các mô hình sản xuất nông nghiệp sinh thái, nông nghiệp xanh.', 0, 0, 0),
+(3270, 1079, 'Link trang chi tiết', 'https://tuoitre.vn/khoi-to-hai-co-so-trong-gia-do-bang-hoa-chat-20241014221452424.htm', 1, 1, 0),
+(3271, 1079, 'Tiêu đề tin tức', 'Khởi tố hai cơ sở trồng giá đỗ bằng hóa chất', 0, 0, 1),
+(3272, 1079, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/khoi-to-hai-co-so-trong-gia-do-bang-hoa-chat-20241014221452424.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/trong-gia-do-bang-hoa-chat-o-quang-ngai-1-17289180477511218898837-50-311-1097-1987-crop-17289186333841701914113.jpg\" /></a>Công an TP Quảng Ngãi đã khởi tố vụ án, khởi tố bị can đối với người liên quan đến hai cơ sở \"trồng\" giá đỗ bằng hóa chất ở TP Quảng Ngãi.', 0, 0, 0),
+(3273, 1080, 'Link trang chi tiết', 'https://tuoitre.vn/chu-tich-quoc-hoi-tran-thanh-man-sap-tham-lao-20241014211804884.htm', 1, 1, 0),
+(3274, 1080, 'Tiêu đề tin tức', 'Chủ tịch Quốc hội Trần Thanh Mẫn sắp thăm Lào', 0, 0, 1),
+(3275, 1080, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/chu-tich-quoc-hoi-tran-thanh-man-sap-tham-lao-20241014211804884.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/chu-tich-quoc-hoi-aipa-1728915369063668921961-67-0-1317-2000-crop-17289158799502049152875.jpg\" /></a>Chủ tịch Quốc hội Trần Thanh Mẫn sẽ thăm Lào từ ngày 17-10 tới, đánh dấu chuyến thăm chính thức đầu tiên của ông đến nước này trên cương vị mới.', 0, 0, 0),
+(3276, 1081, 'Link trang chi tiết', 'https://tuoitre.vn/toan-bo-rac-thai-sinh-hoat-o-ha-noi-se-duoc-dot-de-phat-dien-vao-nam-2025-20241014200354942.htm', 1, 1, 0),
+(3277, 1081, 'Tiêu đề tin tức', 'Toàn bộ rác thải sinh hoạt ở Hà Nội sẽ được đốt để phát điện vào năm 2025', 0, 0, 1),
+(3278, 1081, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/toan-bo-rac-thai-sinh-hoat-o-ha-noi-se-duoc-dot-de-phat-dien-vao-nam-2025-20241014200354942.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/hhva-1728910933779188369779-386-561-923-1420-crop-17289111093061049977752.jpg\" /></a>Chiều 14-10, Chủ tịch UBND TP Hà Nội Trần Sỹ Thanh đã đối thoại với thanh niên thủ đô năm 2024 với chủ đề \"Thanh niên tham gia xây dựng thủ đô xanh, văn hiến, văn minh, hiện đại\".', 0, 0, 0),
+(3279, 1082, 'Link trang chi tiết', 'https://tuoitre.vn/can-cham-dut-viec-benh-nhan-co-bao-hiem-y-te-phai-tu-mua-thuoc-ben-ngoai-20241014195229474.htm', 1, 1, 0),
+(3280, 1082, 'Tiêu đề tin tức', 'Cần chấm dứt việc bệnh nhân có bảo hiểm y tế phải tự mua thuốc bên ngoài', 0, 0, 1),
+(3281, 1082, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/can-cham-dut-viec-benh-nhan-co-bao-hiem-y-te-phai-tu-mua-thuoc-ben-ngoai-20241014195229474.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/pkl-1728908800395718121944-399-561-1261-1941-crop-1728912488089455874543.jpg\" /></a>Dù bệnh nhân có bảo hiểm y tế nhưng vẫn phải tự mua thuốc bên ngoài, điều này không chỉ tạo thêm gánh nặng tài chính mà còn tiềm ẩn rủi ro về nguồn gốc và chất lượng thuốc.', 0, 0, 0),
+(3282, 1083, 'Link trang chi tiết', 'https://tuoitre.vn/de-xuat-bo-cong-an-danh-gia-tac-dong-chuyen-du-lieu-ra-nuoc-ngoai-20241014193805003.htm', 1, 1, 0),
+(3283, 1083, 'Tiêu đề tin tức', 'Đề xuất Bộ Công an đánh giá tác động chuyển dữ liệu ra nước ngoài', 0, 0, 1),
+(3284, 1083, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/de-xuat-bo-cong-an-danh-gia-tac-dong-chuyen-du-lieu-ra-nuoc-ngoai-20241014193805003.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/bt-luong-tam-quang-17289085324481761766682-46-119-617-1033-crop-17289085505191544909794.jpg\" /></a>Bộ trưởng Bộ Công an Lương Tam Quang cho hay sẽ tiếp tục rà soát, hoàn thiện quy định về chuyển giao dữ liệu ra nước ngoài để đảm bảo sự đồng bộ với Luật Bảo vệ dữ liệu cá nhân.', 0, 0, 0),
+(3285, 1084, 'Link trang chi tiết', 'https://tuoitre.vn/la-ky-cuoc-thi-cay-ruong-cua-nong-dan-phong-nha-cuon-hut-khach-du-lich-20241014184947822.htm', 1, 1, 0),
+(3286, 1084, 'Tiêu đề tin tức', 'Lạ kỳ cuộc thi… cày ruộng của nông dân Phong Nha, cuốn hút khách du lịch', 0, 0, 1),
+(3287, 1084, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/la-ky-cuoc-thi-cay-ruong-cua-nong-dan-phong-nha-cuon-hut-khach-du-lich-20241014184947822.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/phong-nha-3-17289059716851105162616-0-0-925-1480-crop-1728906402109769055192.jpg\" /></a>Kỷ niệm ngày truyền thống của Hội Nông dân Việt Nam, nông dân ở thị trấn Phong Nha đã tổ chức cuộc thi cày ruộng bằng máy cày vô cùng độc đáo.', 0, 0, 0),
+(3288, 1085, 'Link trang chi tiết', 'https://tuoitre.vn/tp-hcm-kien-nghi-trung-uong-nhieu-noi-dung-ve-dat-dai-de-ngua-vi-pham-tham-nhung-20241014175032054.htm', 1, 1, 0),
+(3289, 1085, 'Tiêu đề tin tức', 'TP.HCM kiến nghị Trung ương nhiều nội dung về đất đai để ngừa vi phạm, tham nhũng', 0, 0, 1),
+(3290, 1085, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/tp-hcm-kien-nghi-trung-uong-nhieu-noi-dung-ve-dat-dai-de-ngua-vi-pham-tham-nhung-20241014175032054.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/binhchanh-3-1720596326917103414981-17289078611391693151050-53-0-1303-2000-crop-17289079226801601541513.jpg\" /></a>TP.HCM gửi nhiều kiến nghị đến các cơ quan, bộ ngành liên quan, nhất là tập trung một số vấn đề nổi lên trong thời gian qua như: lĩnh vực đăng kiểm; tài chính, ngân hàng; quản lý, sử dụng đất đai...', 0, 0, 0),
+(3291, 1086, 'Link trang chi tiết', 'https://tuoitre.vn/nhieu-nguoi-ha-noi-dung-nuoc-sach-cua-cong-ty-nuoc-sach-song-da-bi-cat-nuoc-20241014190516808.htm', 1, 1, 0),
+(3292, 1086, 'Tiêu đề tin tức', 'Nhiều người Hà Nội dùng nước sạch của Công ty nước sạch Sông Đà bị cắt nước', 0, 0, 1),
+(3293, 1086, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/nhieu-nguoi-ha-noi-dung-nuoc-sach-cua-cong-ty-nuoc-sach-song-da-bi-cat-nuoc-20241014190516808.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/e1c1feb2-a7f0-4080-9fad-21e0450f057c-17289074483901875240407-250-0-1500-2000-crop-17289076098372108051305.jpeg\" /></a>Mức nước trong hồ chứa Đầm Bài dẫn vào Nhà máy nước sạch Sông Đà xuống thấp khiến cho việc lấy nước gặp khó khăn, Công ty nước sạch Sông Đà phải giảm cấp nước cho một số khu vực Hà Nội.', 0, 0, 0),
+(3294, 1087, 'Link trang chi tiết', 'https://tuoitre.vn/con-mua-lon-keo-dai-gan-2-gio-can-tho-ngap-sau-20241014190613411.htm', 1, 1, 0),
+(3295, 1087, 'Tiêu đề tin tức', 'Cơn mưa lớn kéo dài gần 2 giờ, Cần Thơ ngập sâu', 0, 0, 1),
+(3296, 1087, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/con-mua-lon-keo-dai-gan-2-gio-can-tho-ngap-sau-20241014190613411.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/3-3-tran-hoang-na-17289072810671239485564-0-0-1250-2000-crop-17289073674241097020767.jpg\" /></a>Chiều nay 14-10, cơn mưa lớn gần 2 giờ đã khiến các đường phố khu vực trung tâm TP Cần Thơ ngập sâu. Có nơi ngập hơn nửa bánh xe khiến việc sinh hoạt và giao thông bị ảnh hưởng.', 0, 0, 0),
+(3297, 1088, 'Link trang chi tiết', 'https://tuoitre.vn/dai-hoi-mat-tran-to-quoc-viet-nam-lang-nghe-toan-dan-hien-ke-xay-dung-dat-nuoc-20241014180612543.htm', 1, 1, 0),
+(3298, 1088, 'Tiêu đề tin tức', 'Đại hội Mặt trận Tổ quốc Việt Nam: Lắng nghe toàn dân hiến kế xây dựng đất nước', 0, 0, 1),
+(3299, 1088, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/dai-hoi-mat-tran-to-quoc-viet-nam-lang-nghe-toan-dan-hien-ke-xay-dung-dat-nuoc-20241014180612543.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/nhh08578-17289038953521078070012-42-0-1292-2000-crop-172890398489756618948.jpg\" /></a>Theo Bí thư Thành ủy TP.HCM, Đại hội Mặt trận Tổ quốc Việt Nam toàn quốc lần thứ X có ý nghĩa lắng nghe tiếng nói khối đại đoàn kết toàn dân, hiến kế xây dựng đất nước giàu mạnh như mục tiêu đề ra.', 0, 0, 0),
+(3300, 1089, 'Link trang chi tiết', 'https://tuoitre.vn/ong-nguyen-minh-nhut-lam-pho-giam-doc-so-van-hoa-va-the-thao-tp-hcm-20241014185128968.htm', 1, 1, 0),
+(3301, 1089, 'Tiêu đề tin tức', 'Ông Nguyễn Minh Nhựt làm phó giám đốc Sở Văn hóa và Thể thao TP.HCM', 0, 0, 1);
+INSERT INTO `item_details` (`id`, `item_id`, `name`, `value`, `is_primary_key`, `is_detail_url`, `is_contain_keywords`) VALUES
+(3302, 1089, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/ong-nguyen-minh-nhut-lam-pho-giam-doc-so-van-hoa-va-the-thao-tp-hcm-20241014185128968.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/ong-nhut-17289062120821038726829-168-144-728-1039-crop-17289062637621259936328.png\" /></a>Ông Nguyễn Minh Nhựt, vụ trưởng Vụ Văn hóa - Văn nghệ, Ban Tuyên giáo Trung ương, được điều động, bổ nhiệm làm phó giám đốc Sở Văn hóa và Thể thao TP.HCM.', 0, 0, 0),
+(3303, 1090, 'Link trang chi tiết', 'https://tuoitre.vn/cong-bo-giai-thuong-de-thuc-day-mo-hinh-truong-hoc-sinh-thai-truong-hoc-xanh-20241014182027816.htm', 1, 1, 0),
+(3304, 1090, 'Tiêu đề tin tức', 'Công bố giải thưởng để thúc đẩy mô hình trường học sinh thái, trường học xanh', 0, 0, 1),
+(3305, 1090, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/cong-bo-giai-thuong-de-thuc-day-mo-hinh-truong-hoc-sinh-thai-truong-hoc-xanh-20241014182027816.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/aae98c1014cead90f4df-1728904473015492184692-59-0-1309-2000-crop-17289045933871570711793.jpg\" /></a>Giải thưởng Trường học sinh thái ASEAN Việt Nam năm 2024 nhằm đảm bảo cam kết quốc gia cũng như tạo động lực để thúc đẩy việc thực hiện mô hình trường học sinh thái, trường học xanh tại Việt Nam.', 0, 0, 0),
+(3306, 1091, 'Link trang chi tiết', 'https://tuoitre.vn/som-lap-san-giao-dich-thit-heo-tp-hcm-ngan-chan-trai-cay-ngoai-dom-20241014180946463.htm', 1, 1, 0),
+(3307, 1091, 'Tiêu đề tin tức', 'Sớm lập sàn giao dịch thịt heo TP.HCM, ngăn chặn trái cây ngoại dỏm', 0, 0, 1),
+(3308, 1091, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/som-lap-san-giao-dich-thit-heo-tp-hcm-ngan-chan-trai-cay-ngoai-dom-20241014180946463.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/15/a4-17289581322701320920006.jpg\" /></a>Đó là hai nội dung quan trọng được đề cập tại buổi giám sát về công tác quản lý an toàn thực phẩm. Trong đó, việc thành lập sàn giao dịch thịt heo sẽ giúp kiểm soát tốt nguồn thịt heo khi xảy ra dịch bệnh và hàng loạt lợi ích khác.', 0, 0, 0),
+(3309, 1092, 'Link trang chi tiết', 'https://tuoitre.vn/hon-17-000-tai-xe-vi-pham-nong-do-con-trong-9-thang-o-ha-noi-20241014183727454.htm', 1, 1, 0),
+(3310, 1092, 'Tiêu đề tin tức', 'Hơn 17.000 tài xế vi phạm nồng độ cồn trong 9 tháng ở Hà Nội', 0, 0, 1),
+(3311, 1092, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/hon-17-000-tai-xe-vi-pham-nong-do-con-trong-9-thang-o-ha-noi-20241014183727454.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/con-23-17289055776671255920770-25-0-1275-2000-crop-1728905590944404579887.jpg\" /></a>Trong 9 tháng qua, lực lượng chức năng Hà Nội đã xử lý trên 82.000 trường hợp vi phạm. Trong đó có tới 17.548 trường hợp vi phạm nồng độ cồn.', 0, 0, 0),
+(3312, 1093, 'Link trang chi tiết', 'https://tuoitre.vn/nguoi-dan-bi-lua-dao-qua-mang-can-to-giac-ngay-de-cong-an-chan-dong-tien-cua-ke-xau-20241014181900211.htm', 1, 1, 0),
+(3313, 1093, 'Tiêu đề tin tức', 'Người dân bị lừa đảo qua mạng cần tố giác ngay để công an chặn dòng tiền của kẻ xấu', 0, 0, 1),
+(3314, 1093, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/nguoi-dan-bi-lua-dao-qua-mang-can-to-giac-ngay-de-cong-an-chan-dong-tien-cua-ke-xau-20241014181900211.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/hkv3909-17289073661001070303582-0-0-1200-1920-crop-17289073724401162696495.jpg\" /></a>Đại tá Nguyễn Đình Dương, phó giám đốc Công an TP.HCM, cho biết tội phạm công nghệ cao thường tạo tâm lý lo sợ, khống chế tâm lý, đồng thời dẫn dụ trong việc tạo lợi nhuận cho nạn nhân để đánh vào lòng tham.', 0, 0, 0),
+(3315, 1094, 'Link trang chi tiết', 'https://tuoitre.vn/mo-rong-dieu-tra-vu-trom-dau-tren-cao-toc-khanh-hoa-buon-ma-thuot-20241014162030655.htm', 1, 1, 0),
+(3316, 1094, 'Tiêu đề tin tức', 'Mở rộng điều tra vụ trộm dầu trên cao tốc Khánh Hòa - Buôn Ma Thuột', 0, 0, 1),
+(3317, 1094, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/mo-rong-dieu-tra-vu-trom-dau-tren-cao-toc-khanh-hoa-buon-ma-thuot-20241014162030655.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/base64-1728897108792399813418-379-170-1131-1372-crop-1728904642890455880026.png\" /></a>Lợi dụng đêm tối, kẻ gian lẻn vào trộm dầu từ các máy thi công trên cao tốc Khánh Hòa - Buôn Ma Thuột.', 0, 0, 0),
+(3318, 1095, 'Link trang chi tiết', 'https://tuoitre.vn/cong-an-tp-hcm-de-nghi-cung-cap-ho-so-11-nha-dat-ban-dau-gia-de-xac-minh-to-giac-lua-dao-20241013081626995.htm', 1, 1, 0),
+(3319, 1095, 'Tiêu đề tin tức', 'Công an TP.HCM đề nghị cung cấp hồ sơ 11 nhà đất bán đấu giá để xác minh tố giác lừa đảo', 0, 0, 1),
+(3320, 1095, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/cong-an-tp-hcm-de-nghi-cung-cap-ho-so-11-nha-dat-ban-dau-gia-de-xac-minh-to-giac-lua-dao-20241013081626995.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/13/z497313019767293ecfea55b568a389bce9cb30dd9d661-17287821248121885711927-4-0-1254-2000-crop-1728833405096437819179.jpg\" /></a>Cơ quan cảnh sát điều tra Công an TP.HCM đề nghị Cục Thi hành án dân sự cung cấp hồ sơ 11 nhà đất để xác minh tố giác.', 0, 0, 0),
+(3321, 1096, 'Link trang chi tiết', 'https://tuoitre.vn/khoi-to-vu-an-tau-ca-cho-theo-8-thiet-bi-giam-sat-hanh-trinh-2024101417510675.htm', 1, 1, 0),
+(3322, 1096, 'Tiêu đề tin tức', 'Khởi tố vụ án tàu cá chở theo 8 thiết bị giám sát hành trình', 0, 0, 1),
+(3323, 1096, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/khoi-to-vu-an-tau-ca-cho-theo-8-thiet-bi-giam-sat-hanh-trinh-2024101417510675.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/giam-sat-ht-kien-giang-hoang-do-1-1728902913397974387715-160-0-960-1280-crop-1728902978073619668204.jpg\" /></a>Ngoài việc phát hiện tàu cá chở trên 9.100 lít dầu DO chưa rõ nguồn gốc, lực lượng cảnh sát biển còn phát hiện tàu này mang theo 8 thiết bị giám sát hành trình của các tàu cá khác.', 0, 0, 0),
+(3324, 1097, 'Link trang chi tiết', 'https://tuoitre.vn/drone-phun-thuoc-tru-sau-va-vao-day-110kv-gay-mat-dien-o-5-huyen-tai-long-an-20241014173928997.htm', 1, 1, 0),
+(3325, 1097, 'Tiêu đề tin tức', 'Drone phun thuốc trừ sâu va vào dây 110kV gây mất điện ở 5 huyện tại Long An', 0, 0, 1),
+(3326, 1097, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/drone-phun-thuoc-tru-sau-va-vao-day-110kv-gay-mat-dien-o-5-huyen-tai-long-an-20241014173928997.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/drone-vuong-day-17289019995251018784527-0-0-589-942-crop-1728902150395886923026.jpg\" /></a>Một thiết bị bay không người lái (drone) của người dân sử dụng để phun thuốc trừ sâu đã va vào đường dây 110kV khiến 76.000 hộ dân, đơn vị ở 5 huyện trong địa bàn tỉnh Long An mất điện.', 0, 0, 0),
+(3327, 1098, 'Link trang chi tiết', 'https://tuoitre.vn/ly-do-nut-giao-dung-quat-noi-cao-toc-da-nang-quang-ngai-chua-hoan-thanh-20241014172647539.htm', 1, 1, 0),
+(3328, 1098, 'Tiêu đề tin tức', 'Lý do nút giao Dung Quất nối cao tốc Đà Nẵng - Quảng Ngãi chưa hoàn thành', 0, 0, 1),
+(3329, 1098, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/ly-do-nut-giao-dung-quat-noi-cao-toc-da-nang-quang-ngai-chua-hoan-thanh-20241014172647539.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/nut-giao-dung-quat-17289009460141652960970-0-66-820-1378-crop-1728901079644196481298.png\" /></a>Để thi công hoàn thiện nút giao Dung Quất cần phải điều chỉnh chủ trương đầu tư dự án đường cao tốc Đà Nẵng - Quảng Ngãi, nhằm bố trí nguồn vốn.', 0, 0, 0),
+(3330, 1099, 'Link trang chi tiết', 'https://tuoitre.vn/tp-hcm-chi-dao-cu-the-hoa-noi-dung-bai-viet-chong-lang-phi-cua-tong-bi-thu-chu-tich-nuoc-to-lam-20241014172251099.htm', 1, 1, 0),
+(3331, 1099, 'Tiêu đề tin tức', 'TP.HCM chỉ đạo cụ thể hóa nội dung bài viết \'Chống lãng phí\' của Tổng Bí thư, Chủ tịch nước Tô Lâm', 0, 0, 1),
+(3332, 1099, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/tp-hcm-chi-dao-cu-the-hoa-noi-dung-bai-viet-chong-lang-phi-cua-tong-bi-thu-chu-tich-nuoc-to-lam-20241014172251099.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/13/ong-to-lam-17225886558851800425705-53-0-1303-2000-crop-172881105899073432059.jpg\" /></a>Các cấp ủy, tổ chức đảng, cơ quan của TP.HCM triển khai quyết liệt, đồng bộ những giải pháp cụ thể hóa nội dung bài viết \'Chống lãng phí\' của Tổng Bí thư, Chủ tịch nước Tô Lâm.', 0, 0, 0),
+(3333, 1100, 'Link trang chi tiết', 'https://tuoitre.vn/tuan-nay-muc-nuoc-tren-song-hau-tai-long-xuyen-tren-bao-dong-3-20241014154951057.htm', 1, 1, 0),
+(3334, 1100, 'Tiêu đề tin tức', 'Tuần này, mực nước trên sông Hậu tại Long Xuyên trên báo động 3', 0, 0, 1),
+(3335, 1100, 'Mô tả tin tức', '<a href=\"https://tuoitre.vn/tuan-nay-muc-nuoc-tren-song-hau-tai-long-xuyen-tren-bao-dong-3-20241014154951057.htm\"><img src=\"https://cdn1.tuoitre.vn/thumb_w/1200/471584752817336320/2024/10/14/base64-17288955670301362190139-17289001616431366558696-0-0-622-995-crop-17289001702031205944396.jpeg\" /></a>Tuần này, nước lũ về kết hợp triều cường rằm tháng chín sẽ làm mực nước trên sông Hậu tại Long Xuyên trên báo động 3.', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -4440,7 +4530,21 @@ CREATE TABLE `package_users` (
 --
 
 INSERT INTO `package_users` (`id`, `user_id`, `user_type`, `renewal_package`, `days`, `total_price`, `max_auto_config`, `max_config`, `max_export`, `is_active`, `create_at`) VALUES
-(1, 2, 'tên gói thành viên', 'tên gói gia hạn', 30, 100000, 5, 20, 100, 1, '2024-08-20');
+(1, 2, 'tên gói thành viên', 'tên gói gia hạn', 100, 100000, 5, 20, 100, 0, '2024-08-20'),
+(4, 2, 'tên gói thành viên', 'tên gói gia hạn', 30, 100000, 5, 20, 100, 0, '2024-10-19'),
+(5, 2, 'tên gói thành viên', 'tên gói gia hạn', 30, 100000, 5, 20, 100, 0, '2024-10-19'),
+(6, 2, 'tên gói thành viên', 'tên gói gia hạn', 30, 100000, 5, 20, 100, 0, '2024-10-19'),
+(7, 2, 'Gói VIP', '3 tháng', 90, 1350000, 5, 50, 100, 0, '2024-10-19'),
+(8, 2, 'Gói Dùng Thử', '1 tháng', 30, 0, 0, 3, 5, 0, '2024-10-19'),
+(9, 2, 'Gói Thường', '1 năm', 366, 915000, 1, 10, 20, 0, '2024-10-23'),
+(10, 2, 'Gói Thường', '1 năm', 366, 915000, 1, 10, 20, 0, '2024-10-23'),
+(11, 2, 'Gói Thường', '1 năm', 366, 915000, 1, 10, 20, 0, '2024-10-23'),
+(12, 2, 'Gói Thường', '1 tháng', 30, 100000, 1, 10, 20, 0, '2024-10-23'),
+(13, 2, 'Gói Thường', '1 năm', 366, 915000, 1, 10, 20, 0, '2024-10-23'),
+(14, 2, 'Gói Thường', '1 năm', 366, 915000, 1, 10, 20, 0, '2024-10-23'),
+(15, 2, 'Gói VIP', '1 tháng', 30, 500000, 5, 50, 100, 0, '2024-10-23'),
+(16, 2, 'Gói Thường', '1 tháng', 30, 100000, 1, 10, 20, 0, '2024-10-23'),
+(17, 2, 'Gói VIP', '3 tháng', 90, 1350000, 5, 50, 100, 1, '2024-10-23');
 
 -- --------------------------------------------------------
 
@@ -4464,7 +4568,12 @@ CREATE TABLE `renewal_packages` (
 INSERT INTO `renewal_packages` (`id`, `type`, `description`, `promotion`, `days`, `deleted`) VALUES
 (1, '1 tháng', 'Đăng ký gói sử dụng trong một tháng', 0, 30, 0),
 (2, '3 tháng', 'Đăng ký gói sử dụng trong 3 tháng', 10, 90, 0),
-(3, '1 năm', 'Đăng ký gói sử dụng trong một năm', 25, 366, 1);
+(3, '1 năm', 'Đăng ký gói sử dụng trong một năm', 25, 366, 0),
+(4, 't', 'a', 1, 1, 1),
+(5, 'aa', 'a', 2, 3, 1),
+(6, '2', '34', 4, 5, 1),
+(7, 'a', 'ả', 3, 4, 1),
+(8, 'aaa1', 'aaa1', 31, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -4512,8 +4621,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `account_type_id`, `username`, `password`, `fullname`, `email`, `phone`, `config_count`, `export_count`, `locked`) VALUES
 (1, 1, 'admin', '123456', 'adminstrator', 'adminstrator@gmail.com', '0999999999', 0, 0, 0),
-(2, 2, 'tdgthinh', '123456', 'Trần Dương Gia Thịnh', 'tdgthinh@gmail.com', '0987654321', 19, 0, 0),
-(3, 2, 'tdgthinh2', '123456789', 'Trần Dương Gia Thịnh', 'tdgthinh@gmail.com', '0987654321', 0, 0, 0);
+(2, 2, 'tdgthinh', '123456', 'Trần Dương Gia Thịnh', 'tdgthinh@gmail.com', '0987654321', 0, 1, 0),
+(7, 2, 'tranduonggiathinh', '123456', 'tran duong gia thinh', 'tdgt@gmail.com', '1234567890', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -4537,7 +4646,11 @@ CREATE TABLE `user_types` (
 --
 
 INSERT INTO `user_types` (`id`, `type`, `description`, `max_auto_config`, `max_config`, `max_export`, `price`, `deleted`) VALUES
-(1, 'Gói dùng thử', 'Gói dùng thử trong 7 ngày', 1, 10, 20, 0, 0);
+(1, 'Gói Dùng Thử', 'Gói dùng thử giúp người dùng trải nghiệm dịch vụ miễn phí', 0, 3, 5, 0, 0),
+(2, 'Gói Thường', 'Gói thành viên với các quyền cơ bản', 1, 10, 20, 100000, 0),
+(3, 'Gói VIP', 'Gói thành viên với các ưu đãi đặc biệt', 5, 50, 100, 500000, 0),
+(11, 'acbc', '221ww', 752, 532, 6422, 422, 1),
+(12, 'ad', 'as', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -4559,7 +4672,7 @@ CREATE TABLE `websites` (
 INSERT INTO `websites` (`id`, `name`, `url`, `user_id`) VALUES
 (1, 'Tiki', 'tiki.vn', 2),
 (2, 'CellphoneS', 'cellphones.com.vn', 2),
-(13, 'Tuổi trẻ', 'tuoitre.vn', 2);
+(3, 'Tuổi trẻ', 'tuoitre.vn', 2);
 
 --
 -- Indexes for dumped tables
@@ -4717,7 +4830,7 @@ ALTER TABLE `crawl_data_types`
 -- AUTO_INCREMENT for table `crawl_details`
 --
 ALTER TABLE `crawl_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `crawl_result_types`
@@ -4741,13 +4854,13 @@ ALTER TABLE `http_methods`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1070;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1101;
 
 --
 -- AUTO_INCREMENT for table `item_details`
 --
 ALTER TABLE `item_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3244;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3336;
 
 --
 -- AUTO_INCREMENT for table `item_types`
@@ -4759,13 +4872,13 @@ ALTER TABLE `item_types`
 -- AUTO_INCREMENT for table `package_users`
 --
 ALTER TABLE `package_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `renewal_packages`
 --
 ALTER TABLE `renewal_packages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `setting`
@@ -4777,13 +4890,13 @@ ALTER TABLE `setting`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_types`
 --
 ALTER TABLE `user_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `websites`
