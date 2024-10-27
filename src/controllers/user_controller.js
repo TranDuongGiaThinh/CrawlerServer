@@ -184,8 +184,29 @@ exports.getAllUser = async (req, res) => {
     try {
         const users = await userService.getAllUser()
 
+        const results = [];
+        for (const user of users) {
+            const isAdmin = await accountTypeService.checkAdminPermission(user.id)
+            const autoCrawlConfigCountOfUser = await autoCrawlService.countAutoCrawlConfig(user.id)
+
+            const userClone = { 
+                id: user.id,
+                username: user.username,
+                fullname: user.fullname,
+                email: user.email,
+                phone: user.phone,
+                locked: user.locked,
+                is_admin: isAdmin,
+                export_count: user.export_count,
+                config_count: user.config_count,
+                auto_config_count: autoCrawlConfigCountOfUser
+            }
+            
+            results.push(userClone)
+        }
+
         res.status(HTTP_STATUS.OK).json({
-            users: users,
+            users: results,
             message: 'Lấy danh sách người dùng thành công!'
         })
     } catch (e) {
