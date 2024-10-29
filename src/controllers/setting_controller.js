@@ -24,23 +24,6 @@ exports.getIntroduction = async (req, res) => {
     }
 }
 
-// Lấy nội dung footer
-exports.getFooter = async (req, res) => {
-    try {
-        const footer = await settingService.getFooter()
-
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-            footer: footer,
-            message: 'Lấy nội dung footer thành công!'
-        })
-    } catch (e) {
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-            message: 'Lỗi khi lấy nội dung footer!',
-            error: e.message
-        })
-    }
-}
-
 // Tải xuống ứng dụng
 exports.downloadApp = async (req, res) => {
     try {
@@ -109,33 +92,6 @@ exports.updateIntroduction = async (req, res) => {
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi cập nhật trang giới thiệu!',
-            error: e.message
-        })
-    }
-}
-
-// Cập nhật footer
-exports.updateFooter = async (req, res) => {
-    try {
-        const {footer} = req.body
-
-        // Kiểm tra đủ tham số đầu vào
-        if (!footer) {
-            return res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: 'Thiếu tham số đầu vào!'
-            })
-        }
-
-        // Thực hiện cập nhật
-        const newSetting = await settingService.updateFooter(footer)
-
-        res.status(HTTP_STATUS.OK).json({
-            setting: newSetting,
-            message: 'Cập nhật footer thành công!'
-        })
-    } catch (e) {
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-            message: 'Lỗi khi cập nhật footer!',
             error: e.message
         })
     }

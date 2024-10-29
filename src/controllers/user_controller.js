@@ -230,17 +230,17 @@ exports.searchUser = async (req, res) => {
         }
 
         // Thực hiện tìm người dùng
-        const user = await userService.search(keyword)
+        const users = await userService.search(keyword)
 
-        if (!user) {
+        if (!users) {
             return res.status(HTTP_STATUS.OK).json({
-                user: user,
+                user: users,
                 message: 'Không tìm thấy người dùng!'
             })
         }
         else {
             res.status(HTTP_STATUS.OK).json({
-                user: user,
+                users: users,
                 message: 'Tìm kiếm người dùng thành công!'
             })
         }

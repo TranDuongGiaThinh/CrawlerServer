@@ -42,9 +42,6 @@ const uploadInstruction = multer({ storage: instructionStorage })
 // Lấy nội dung giới thiệu
 route.get('/get-introduction', settingController.getIntroduction)
 
-// Lấy nội dung footer
-route.get('/get-footer', settingController.getFooter)
-
 // Tải xuống ứng dụng
 route.get('/download-app', settingController.downloadApp)
 
@@ -53,9 +50,6 @@ route.get('/download-instruction', settingController.downloadInstruction)
 
 // Cập nhật trang giới thiệu
 route.patch('/update-introduction', settingController.updateIntroduction)
-
-// Cập nhật footer
-route.patch('/update-footer', settingController.updateFooter)
 
 // Cập nhật file ứng dụng
 route.patch('/update-app', uploadApp.single('file'), settingController.updateApp)
