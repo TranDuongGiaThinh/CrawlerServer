@@ -44,7 +44,7 @@ const getFormattedDate = () => {
 
 // Lấy khóa bí mật từ biến môi trường
 const algorithm = 'aes-256-cbc'
-const key = process.env.SECRET_KEY;
+const key = process.env.SECRET_KEY
 
 // Hàm mã hóa văn bản thành chuỗi hex
 function encrypt(text) {

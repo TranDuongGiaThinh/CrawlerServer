@@ -11,13 +11,11 @@ const dataDir = path.join(__dirname, '../../', 'data')
 // Cấu hình `multer` cho file ứng dụng
 const appStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, dataDir)
+        cb(null, path.join(dataDir))
     },
     filename: (req, file, cb) => {
-        // Lấy phần mở rộng của file
-        const ext = path.extname(file.originalname)
-
-        const fileName = `techmo${ext}`
+        const extension = path.extname(file.originalname)
+        const fileName = `techmo${extension}`
         cb(null, fileName)
     }
 })
@@ -28,10 +26,8 @@ const instructionStorage = multer.diskStorage({
         cb(null, dataDir)
     },
     filename: (req, file, cb) => {
-        // Lấy phần mở rộng của file
-        const ext = path.extname(file.originalname)
-
-        const fileName = `instruction${ext}`
+        const extension = path.extname(file.originalname)
+        const fileName = `instruction${extension}`
         cb(null, fileName)
     }
 })

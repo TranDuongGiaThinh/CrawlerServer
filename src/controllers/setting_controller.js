@@ -2,10 +2,7 @@ const {HTTP_STATUS} = require('../untils/constants')
 const settingService = require('../services/setting_service')
 
 const path = require('path')
-const fs = require('fs');
-
-// Đặt đường dẫn đến thư mục 'data'
-const dataDir = path.join(__dirname, '../../', 'data')
+const fs = require('fs')
 
 // Lấy nội dung giới thiệu
 exports.getIntroduction = async (req, res) => {
@@ -97,47 +94,15 @@ exports.updateIntroduction = async (req, res) => {
     }
 }
 
-// Thực hiện lưu file
-function saveNewFile(req, res, filePath, callback) {
-    const fileStream = fs.createWriteStream(filePath)
+// Lưu file
+const saveNewFile = async (filePath, serviceFunction) => {
+    const dataDir = path.dirname(filePath)
 
-    req.pipe(fileStream)
+    if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true })
+    }
 
-    fileStream.on('finish', () => {
-        res.status(HTTP_STATUS.OK).json({ message: 'File được cập nhật thành công!' })
-
-        callback(filePath) 
-    })
-
-    fileStream.on('error', (err) => {
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-            message: 'Lỗi khi lưu file!',
-            error: err.message
-        })
-    })
-}
-
-// Xóa tất cả các file có basename bắt đầu bằng phần tên đã cho
-function deleteOldFiles(basename, callback) {
-    fs.readdir(dataDir, (err, files) => {
-        if (err) return callback(err)
-        
-        // Tạo một danh sách các file cần xóa
-        const filesToDelete = files.filter(file => path.basename(file, path.extname(file)).startsWith(basename))
-
-        // Xóa từng file
-        let remaining = filesToDelete.length
-        if (remaining === 0) return callback(null)
-
-        filesToDelete.forEach(file => {
-            const filePath = path.join(dataDir, file)
-            fs.unlink(filePath, (unlinkErr) => {
-                if (unlinkErr) return callback(unlinkErr)
-                remaining -= 1
-                if (remaining === 0) callback(null)
-            })
-        })
-    })
+    return serviceFunction(filePath)
 }
 
 // Cập nhật file ứng dụng
@@ -146,20 +111,12 @@ exports.updateApp = async (req, res) => {
         // Lấy phần mở rộng của file
         const ext = path.extname(req.file.originalname)
         const fileName = `techmo${ext}`
-        const filePath = path.join(dataDir, fileName)
-        
-        // Xóa các file cũ với basename bắt đầu bằng "techmo"
-        deleteOldFiles('techmo', async (err) => {
-            if (err) {
-                return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-                    message: 'Lỗi khi xóa file cũ!',
-                    error: err.message
-                })
-            }
+        const filePath = path.join(__dirname, '../../data', fileName)
 
-            
-            // Sau khi xóa các file cũ, lưu file mới
-            saveNewFile(req, res, filePath, settingService.updateApp)
+        await saveNewFile(filePath, settingService.updateApp)
+
+        res.status(HTTP_STATUS.OK).json({
+            message: 'Cập nhật file ứng dụng thành công!'
         })
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
@@ -175,19 +132,13 @@ exports.updateInstruction = async (req, res) => {
         // Lấy phần mở rộng của file
         const ext = path.extname(req.file.originalname)
         const fileName = `instruction${ext}`
-        const filePath = path.join(dataDir, fileName)
+        const filePath = path.join(__dirname, '../../data', fileName)
+
         
-        // Xóa các file cũ với basename bắt đầu bằng "instruction"
-        deleteOldFiles('instruction', async (err) => {
-            if (err) {
-                return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-                    message: 'Lỗi khi xóa file cũ!',
-                    error: err.message
-                })
-            }
-            
-            // Sau khi xóa các file cũ, lưu file mới
-            saveNewFile(req, res, filePath, settingService.updateInstruction)
+        await saveNewFile(filePath, settingService.updateInstruction)
+
+        res.status(HTTP_STATUS.OK).json({
+            message: 'Cập nhật file hướng dẫn thành công!'
         })
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
