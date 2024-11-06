@@ -9,7 +9,7 @@ exports.getIntroduction = async (req, res) => {
     try {
         const introduction = await settingService.getIntroduction()
 
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+        res.status(HTTP_STATUS.OK).json({
             introduction: introduction,
             message: 'Lấy nội dung giới thiệu thành công!'
         })
