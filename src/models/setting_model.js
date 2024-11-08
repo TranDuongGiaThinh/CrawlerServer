@@ -19,10 +19,6 @@ const SettingModel = sequelize.define(
         introduction: {
             type: DataTypes.TEXT,
             allowNull: false
-        },
-        footer: {
-            type: DataTypes.TEXT,
-            allowNull: false
         }
     },
     {

@@ -11,13 +11,11 @@ const dataDir = path.join(__dirname, '../../', 'data')
 // Cấu hình `multer` cho file ứng dụng
 const appStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, dataDir)
+        cb(null, path.join(dataDir))
     },
     filename: (req, file, cb) => {
-        // Lấy phần mở rộng của file
-        const ext = path.extname(file.originalname)
-
-        const fileName = `techmo${ext}`
+        const extension = path.extname(file.originalname)
+        const fileName = `techmo${extension}`
         cb(null, fileName)
     }
 })
@@ -28,10 +26,8 @@ const instructionStorage = multer.diskStorage({
         cb(null, dataDir)
     },
     filename: (req, file, cb) => {
-        // Lấy phần mở rộng của file
-        const ext = path.extname(file.originalname)
-
-        const fileName = `instruction${ext}`
+        const extension = path.extname(file.originalname)
+        const fileName = `instruction${extension}`
         cb(null, fileName)
     }
 })
@@ -42,9 +38,6 @@ const uploadInstruction = multer({ storage: instructionStorage })
 // Lấy nội dung giới thiệu
 route.get('/get-introduction', settingController.getIntroduction)
 
-// Lấy nội dung footer
-route.get('/get-footer', settingController.getFooter)
-
 // Tải xuống ứng dụng
 route.get('/download-app', settingController.downloadApp)
 
@@ -53,9 +46,6 @@ route.get('/download-instruction', settingController.downloadInstruction)
 
 // Cập nhật trang giới thiệu
 route.patch('/update-introduction', settingController.updateIntroduction)
-
-// Cập nhật footer
-route.patch('/update-footer', settingController.updateFooter)
 
 // Cập nhật file ứng dụng
 route.patch('/update-app', uploadApp.single('file'), settingController.updateApp)

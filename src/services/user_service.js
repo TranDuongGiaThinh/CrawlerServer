@@ -1,6 +1,6 @@
 const UserModel = require('../models/user_model')
 const AccountTypeModel = require('../models/account_type_model')
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
 // Kiểm tra người dùng có tồn tại
 exports.checkUserExists = async (userId) => {
@@ -99,19 +99,23 @@ exports.getAllUser = async () => {
 }
 
 // Tìm kiếm người dùng bằng từ khóa
-exports.search = async (username) => {
+exports.search = async (key) => {
     const adminAccountType = await AccountTypeModel.findOne({
         where: {
             is_admin: true
         }
     })
 
-    const users = await UserModel.findOne({
+    const users = await UserModel.findAll({
         where: {
-            username: username,
-            account_type_id: {
-                [Sequelize.Op.ne]: adminAccountType.id
-            }
+            [Sequelize.Op.and]: [
+                Sequelize.literal(`LOWER(username) LIKE LOWER('${key}%')`),
+                {
+                    account_type_id: {
+                        [Sequelize.Op.ne]: adminAccountType.id
+                    }
+                }
+            ]
         }
     })
 

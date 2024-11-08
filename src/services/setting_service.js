@@ -7,13 +7,6 @@ exports.getIntroduction = async () => {
     return setting.introduction
 }
 
-// Lấy nội dung footer
-exports.getFooter = async () => {
-    const setting = await SettingModel.findOne()
-
-    return setting.footer
-}
-
 // Tải xuống ứng dụng
 exports.getAppFilePath = async () => {
     const setting = await SettingModel.findOne()
@@ -33,16 +26,6 @@ exports.updateIntroduction = async (newIntroduction) => {
     const setting = await SettingModel.findOne()
 
     setting.introduction = newIntroduction
-    await setting.save()
-
-    return setting
-}
-
-// Cập nhật footer
-exports.updateFooter = async (newFooter) => {
-    const setting = await SettingModel.findOne()
-
-    setting.footer = newFooter
     await setting.save()
 
     return setting

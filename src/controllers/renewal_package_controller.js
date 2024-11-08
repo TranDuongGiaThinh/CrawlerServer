@@ -96,7 +96,7 @@ exports.add = async (req, res) => {
         const newRenewalPackage = await renewalPackageService.add(type, description, promotion, days)
 
         res.status(HTTP_STATUS.CREATED).json({
-            renewal_packages: newRenewalPackage,
+            renewal_package: newRenewalPackage,
             message: 'Thêm gói gia hạn thành công!'
         })
     } catch(e) {
@@ -153,7 +153,7 @@ exports.update = async (req, res) => {
         const updatedRenewalPackage = await renewalPackageService.update(id, type, description, promotion, days)
 
         res.status(HTTP_STATUS.OK).json({
-            renewal_packages: updatedRenewalPackage,
+            renewal_package: updatedRenewalPackage,
             message: 'Cập nhật gói gia hạn thành công!'
         })
     } catch(e) {

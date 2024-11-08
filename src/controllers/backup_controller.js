@@ -44,7 +44,7 @@ const getFormattedDate = () => {
 
 // Lấy khóa bí mật từ biến môi trường
 const algorithm = 'aes-256-cbc'
-const key = process.env.SECRET_KEY;
+const key = process.env.SECRET_KEY
 
 // Hàm mã hóa văn bản thành chuỗi hex
 function encrypt(text) {
@@ -105,16 +105,27 @@ exports.restore = async (req, res) => {
         // Tạo bản sao lưu dữ liệu hiện tại trước khi khôi phục
         await createBackupBeforeRestore()
 
-        // Đọc và giải mã dữ liệu từ file backup gửi lên
-        const encryptedData = fs.readFileSync(tempFilePath, 'utf8')
-        const decryptedData = decrypt(encryptedData)
-        const data = JSON.parse(decryptedData)
+        let data
+        try {
+            // Đọc và giải mã dữ liệu từ file backup gửi lên
+            const encryptedData = fs.readFileSync(tempFilePath, 'utf8');
+            const decryptedData = decrypt(encryptedData);
+            data = JSON.parse(decryptedData);
 
-        // Khôi phục dữ liệu từ file backup
-        await backupService.restore(data)
+            // Khôi phục dữ liệu từ file backup
+            await backupService.restore(data)
 
-        // Xóa file backup tạm thời
-        fs.unlinkSync(tempFilePath)
+            // Xóa file backup tạm thời
+            fs.unlinkSync(tempFilePath)
+        } catch (decryptError) {
+            // Xóa file backup tạm thời nếu giải mã thất bại
+            fs.unlinkSync(tempFilePath);
+
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
+                message: 'File backup không hợp lệ!',
+                error: decryptError.message
+            });
+        }
 
         res.status(HTTP_STATUS.OK).json({
             message: 'Khôi phục dữ liệu thành công!'
