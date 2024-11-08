@@ -73,7 +73,7 @@ exports.updateIntroduction = async (req, res) => {
         const {introduction} = req.body
 
         // Kiểm tra đủ tham số đầu vào
-        if (!introduction) {
+        if (introduction == undefined) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
             })
