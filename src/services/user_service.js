@@ -147,3 +147,13 @@ exports.increaseExportCount = async (userId) => {
     user.export_count ++
     user.save()
 }
+
+// reset quyền
+exports.resetPermission = async (userId) => {
+    const user = await UserModel.findByPk(userId)
+
+    user.config_count = 0
+    user.export_count = 0
+
+    await user.save()
+}

@@ -12,6 +12,25 @@ exports.getAllOfUser = async (userId) => {
     return packageUsers
 }
 
+// Lấy danh sách lịch sử đăng ký gói đang hoạt động
+exports.getActivePackageUsers = async () => {
+    const packageUsers = await PackageUserModel.findAll({
+        where: {
+            is_active: true
+        }
+    })
+
+    return packageUsers
+}
+
+// Đánh dấu gói hết hạn
+exports.setActiveIsFalse = async (id) => {
+    const packageUser = await PackageUserModel.findByPk(id)
+
+    packageUser.is_active = false
+    await packageUser.save()
+}
+
 // Lấy gói đang được sử dụng của người dùng
 exports.getPackageIsUsing = async (userId) => {
     const packageUser = await PackageUserModel.findOne({

@@ -40,7 +40,7 @@ exports.crawlData = async (req, res) => {
 
         // Kiểm tra cấu hình có phải của user
         if (config.user_id != user_id) {
-            return res.status(HTTP_STATUS.NOT_FOUND).json({
+            return res.status(HTTP_STATUS.FORBIDDEN).json({
                 message: 'Người dùng không có quyền thu thập với cấu hình này!'
             })
         }

@@ -95,4 +95,59 @@ app.use('/item', itemRoute)
 
 app.listen(port, async () => {
     console.log(`Server is running at http://localhost:${port}`)
+    await checkPackageUser()
 })
+
+
+const cron = require('node-cron')
+const {getActivePackageUsers, setActiveIsFalse} = require('./services/package_user_service.js')
+const {resetPermission} = require('./services/user_service.js')
+
+// Thực hiện xử lý các gói hết hạn vào 0:00 mỗi ngày
+const hour = 0
+const min = 0
+cron.schedule(`${min} ${hour} * * *`, async ()  => {
+    await checkPackageUser()
+}, {
+    scheduled: true,
+    timezone: "Asia/Ho_Chi_Minh"
+})
+
+const checkPackageUser = async () => {
+    try {
+        const currentDate = new Date()
+        const packageUsers = await getActivePackageUsers()
+        for (const packageUser of packageUsers) {
+            const createAt = new Date(packageUser.create_at)
+            const days = packageUser.days
+
+            // Nếu ngày hiện tại < ngày tạo + số ngày đăng ký
+            const expirationDate = new Date(createAt)
+            expirationDate.setDate(expirationDate.getDate() + days)
+
+            // Kết thúc gói và reset quyền của người dùng khi hết hạn
+            if (currentDate > expirationDate) {
+                await setActiveIsFalse(packageUser.id)
+                await resetPermission(packageUser.user_id)
+            } else {
+                // Nếu đến ngày gia hạn, reset quyền cho chu kỳ mới (30 ngày)
+                const nextRenewalDate = new Date(createAt);
+                while (nextRenewalDate < currentDate) {
+                        nextRenewalDate.setDate(nextRenewalDate.getDate() + 30)
+                   if (nextRenewalDate > currentDate) {
+                        nextRenewalDate.setDate(nextRenewalDate.getDate() - 30)
+                        break
+                   }
+                }
+                
+                if (nextRenewalDate.getDate() === currentDate.getDate() &&
+                    nextRenewalDate.getMonth() === currentDate.getMonth() &&
+                    nextRenewalDate.getFullYear() === currentDate.getFullYear()) {
+                    await resetPermission(packageUser.user_id)
+                }
+            }
+        }
+    } catch (error) {
+        console.log('Lỗi khi kiểm tra gói đăng ký hết hạn', error.message)
+    }
+}
