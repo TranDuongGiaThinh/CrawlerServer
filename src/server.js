@@ -143,8 +143,7 @@ const checkPackageUser = async () => {
                 if (nextRenewalDate.getDate() === currentDate.getDate() &&
                     nextRenewalDate.getMonth() === currentDate.getMonth() &&
                     nextRenewalDate.getFullYear() === currentDate.getFullYear()) {
-                    await resetPermission(packageUser.user_id);
-                    console.log("Đã reset quyền cho chu kỳ mới.");
+                    await resetPermission(packageUser.user_id)
                 }
             }
         }
