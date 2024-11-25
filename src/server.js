@@ -28,6 +28,12 @@ const autoCrawlRoute = require('./routes/auto_crawl_route.js')
 const crawlingRoute = require('./routes/crawling_route.js')
 const itemRoute = require('./routes/item_route.js')
 
+const cron = require('node-cron')
+const {getActivePackageUsers, setActiveIsFalse} = require('./services/package_user_service.js')
+const {resetPermission} = require('./services/user_service.js')
+const autoCrawlService = require('./services/auto_crawl_service.js')
+const {autoCrawling} = require('./controllers/crawling_controller.js')
+
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -99,10 +105,6 @@ app.listen(port, async () => {
 })
 
 
-const cron = require('node-cron')
-const {getActivePackageUsers, setActiveIsFalse} = require('./services/package_user_service.js')
-const {resetPermission} = require('./services/user_service.js')
-
 // Thực hiện xử lý các gói hết hạn vào 0:00 mỗi ngày
 const hour = 0
 const min = 0
@@ -149,5 +151,58 @@ const checkPackageUser = async () => {
         }
     } catch (error) {
         console.log('Lỗi khi kiểm tra gói đăng ký hết hạn', error.message)
+    }
+}
+
+// Cron job chạy mỗi phút, kiểm tra và thực hiện thu thập tự động
+cron.schedule('* * * * *', async () => {
+    try {
+        const currentTime = new Date()
+        
+        const autoConfigs = await autoCrawlService.getAll()
+
+        for (const autoConfig of autoConfigs) {
+            // Bỏ qua khi cấu hình đang được thu thập tự động trước đó
+            if (autoConfig.is_crawling) continue
+
+            // Xóa cấu hình khi hết hạn
+            const expirationDate = new Date(autoConfig.expiry_date)
+            if (expirationDate < currentTime) {
+                await autoCrawlService.delete(autoConfig.crawl_config_id)
+                continue
+            }
+
+            // Kiểm tra xem hôm nay đã thực hiện thu thập chưa
+            const updatedTime = new Date(autoConfig.update_at)
+            if (isSameDay(currentTime, updatedTime)) continue
+
+            // Thực hiện thu thập nếu tới giờ cần thu thập
+            const [crawlHour, crawlMinute, crawlSecond] = autoConfig.crawl_time.split(':').map(Number)
+            if (crawlHour < currentTime.getHours() || (crawlHour == currentTime.getHours() && crawlMinute <= currentTime.getMinutes())) {
+                handAutoCrawling(autoConfig.crawl_config_id)
+            }
+        }
+    } catch (err) {
+        console.error('Lỗi khi thực hiện kiểm tra thu thập tự động:', err.message)
+    }
+})
+
+const isSameDay = (date1, date2) => {
+    return (
+        date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear()
+    )
+}
+
+const handAutoCrawling = async (configId) => {
+    try {
+        await autoCrawlService.setIsCrawling(configId, true)
+        await autoCrawling(configId)
+        await autoCrawlService.setIsCrawling(configId, false)
+
+        console.log('Thực hiện thu thập tự động thành công cho cấu hình có id = ', configId)
+    } catch (error) {
+        console.log('Lỗi khi thực hiện thu thập tự động', error.message)
     }
 }

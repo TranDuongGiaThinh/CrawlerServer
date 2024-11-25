@@ -81,6 +81,34 @@ exports.crawlData = async (req, res) => {
     }
 }
 
+
+
+// hàm thực hiện thu thập dữ liệu khi đến giờ
+exports.autoCrawling = async (configId) => {
+    let browserObj = {}
+
+    try {
+        // Lấy thông tin cơ bản của cấu hình
+        const config = await configService.get(configId)
+
+        // Lấy tất cả thông tin của cấu hình
+        const crawlConfigInfor = await crawlingService.getConfigInfor(configId)
+
+        // Thực hiện thu thập
+        const crawlResult = await crawling(crawlConfigInfor, browserObj)
+
+        // Đóng trình duyệt khi đã sử dụng xong
+        if (browserObj.browser) browserObj.browser.close()
+
+        // Lưu tất cả kết quả thu thập được vào database
+        await saveCrawlResult(crawlResult.items, config.item_type_id, config.website_id, config.id)
+        
+    } catch (error) {
+        // Đóng trình duyệt khi đã sử dụng xong
+        if (browserObj.browser) browserObj.browser.close()
+    }
+}
+
 // Hàm thực hiện cập nhật lại dữ liệu thu thập, với cấu hình thu tập được lấy từ database theo id
 async function crawling(crawlConfigInfor, browserObj) {
     // Tách url thành mảng
@@ -170,7 +198,7 @@ const save = async (itemData, itemDetailDatas) => {
         const item = await itemService.get(itemPrimary.id)
 
         // Cập nhật chi tiết item
-        await itemDetailService.updateItemDetails(itemPrimary.id, itemDetailDatas)
+        await itemDetailService.updateItemDetails(item.id, itemDetailDatas)
     }
     // Thêm mới
     else {

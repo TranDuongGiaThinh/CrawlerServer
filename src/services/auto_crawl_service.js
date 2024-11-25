@@ -1,8 +1,6 @@
 const AutoCrawlModel = require('../models/auto_crawl_model')
 const CrawlConfigModel = require('../models/crawl_config_model')
-const UserModel = require('../models/user_model')
 const packageUserService = require('../services/package_user_service')
-const userService = require('../services/user_service')
 
 // Kiểm tra cấu hình thu thập tự động đã tồn tại
 exports.checkAutoCrawlExistsByConfigId = async (configId) => {
@@ -33,6 +31,23 @@ exports.checkPermission = async (userId) => {
 
     // Trả về kết quả kiểm tra
     return packageUser.max_auto_config - autoConfigCount > 0
+}
+
+// Lấy tất cả cấu hình thu thập tự động
+exports.getAll = async () => {
+    const autoConfigs = await AutoCrawlModel.findAll()
+
+    return autoConfigs
+}
+
+// Đánh dấu là đang thu thập
+exports.setIsCrawling = async (id, value) => {
+    const autoConfig = await AutoCrawlModel.findByPk(id)
+
+    autoConfig.is_crawling = value
+    autoConfig.update_at = Date.now()
+
+    await autoConfig.save()
 }
 
 // Đếm cấu hình thu thập tự động
