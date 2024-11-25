@@ -178,7 +178,7 @@ exports.update = async (req, res) => {
         const { id, result_type_id, item_type_id, http_method_id, item_selector, headers_api, body_api } = req.body
 
         // Kiểm tra tham số đầu vào
-        if (!id || !result_type_id || !item_type_id || !http_method_id || !item_selector || !headers_api || !body_api) {
+        if (!id || !result_type_id || !item_type_id || !http_method_id) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: 'Thiếu tham số đầu vào!'
             })
