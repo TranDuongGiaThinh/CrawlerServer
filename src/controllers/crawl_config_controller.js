@@ -204,7 +204,7 @@ exports.update = async (req, res) => {
     } catch (error) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi thực hiện cập nhật cấu hình!',
-            error: error
+            error: error.message
         })
     }
 }
