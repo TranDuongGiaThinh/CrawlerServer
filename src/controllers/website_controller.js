@@ -230,12 +230,10 @@ exports.delete = async (req, res) => {
         await websiteService.delete(id)
 
         res.status(HTTP_STATUS.OK).json({
-            check_result: isUsing,
             message: 'Xóa website thành công!'
         })
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-            check_result: false,
             message: 'Lỗi khi xóa website!',
             error: e.message 
         })

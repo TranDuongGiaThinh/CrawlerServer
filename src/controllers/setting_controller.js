@@ -33,9 +33,15 @@ exports.downloadApp = async (req, res) => {
         res.setHeader('Content-Disposition', `attachment; filename=${path.basename(filePath)}`)
         res.setHeader('Content-Type', 'application/octet-stream')
 
-        // Đọc và gửi nội dung tệp về phía client
-        const fileStream = fs.createReadStream(filePath)
-        fileStream.pipe(res)     
+        if (fs.existsSync(filePath)) {
+            // Đọc và gửi nội dung tệp về phía client
+            const fileStream = fs.createReadStream(filePath)
+            fileStream.pipe(res)
+        } else {
+            res.status(HTTP_STATUS.NOT_FOUND).json({
+                message: 'Không tìm thấy file cài đặt!'
+            })
+        }    
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi tải xuống ứng dụng!',
@@ -56,9 +62,16 @@ exports.downloadInstruction = async (req, res) => {
         res.setHeader('Content-Disposition', `attachment; filename=${path.basename(filePath)}`)
         res.setHeader('Content-Type', 'application/octet-stream')
 
-        // Đọc và gửi nội dung tệp về phía client
-        const fileStream = fs.createReadStream(filePath)
-        fileStream.pipe(res)
+        if (fs.existsSync(filePath)) {
+            // Đọc và gửi nội dung tệp về phía client
+            const fileStream = fs.createReadStream(filePath)
+            fileStream.pipe(res)
+        } else {
+            res.status(HTTP_STATUS.NOT_FOUND).json({
+                message: 'Không tìm thấy file hướng dẫn sử dụng!'
+            })
+        }
+        
     } catch (e) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: 'Lỗi khi tải xuống hướng dẫn sử dụng!',
@@ -80,10 +93,9 @@ exports.updateIntroduction = async (req, res) => {
         }
 
         // Thực hiện cập nhật
-        const newSetting = await settingService.updateIntroduction(introduction)
+        await settingService.updateIntroduction(introduction)
 
         res.status(HTTP_STATUS.OK).json({
-            setting: newSetting,
             message: 'Cập nhật tra giới thiệu thành công!'
         })
     } catch (e) {

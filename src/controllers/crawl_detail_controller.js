@@ -10,9 +10,9 @@ exports.add = async (req, res) => {
         } = req.body
         
         // Kiểm tra đủ tham số đầu vào
-        if (!crawl_config_id || !sort_index  || data_type_id !== undefined
-            || !name || !selector || !is_primary_key == null
-            || is_detail_url == null || !is_contain_keywords == null) {
+        if (!crawl_config_id || !sort_index  || data_type_id == undefined
+            || !name || !selector || is_primary_key == undefined
+            || is_detail_url == undefined || is_contain_keywords == undefined) {
                 return res.status(HTTP_STATUS.BAD_REQUEST).json({
                     message: 'Thiếu tham số đầu vào!'
                 });
