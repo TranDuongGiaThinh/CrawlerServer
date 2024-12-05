@@ -58,7 +58,7 @@ exports.crawlData = async (req, res) => {
         const isComplete = await configService.checkIsComplete(crawl_config_id)
         if (isComplete) {
             // Lưu tất cả kết quả thu thập được vào database
-            await saveCrawlResult(crawlResult.items, config.item_type_id, config.website_id, config.id)
+            saveCrawlResult(crawlResult.items, config.item_type_id, config.website_id, config.id)
         } 
 
         // Trả về 10 item đầu tiên thu thập được
@@ -168,7 +168,7 @@ async function saveCrawlResult(itemDatas, itemTypeId, websiteId, crawlConfigId) 
             })
         }
 
-        await save(
+        save(
             {item_type_id: itemTypeId, website_id: websiteId, crawl_config_id: crawlConfigId},
             itemDetails
         )
